@@ -357,8 +357,8 @@ This project is licensed under the terms of the `MIT` license. See [LICENSE](htt
 
 ```
 @misc{fsdl_deforestration_detection,
-  author = {fsdl_deforestration_detection},
-  title = {Predicting Deforestration from Satellite Images. Final Project for Full Stack Deep Learning. Authors Karthik Bhaskar and Andre Ferreira},
+  author = {Karthik Bhaskar, Andre Ferreira},
+  title = {Predicting Deforestration from Satellite Images},
   year = {2021},
   publisher = {GitHub},
   journal = {GitHub repository},
@@ -366,6 +366,4 @@ This project is licensed under the terms of the `MIT` license. See [LICENSE](htt
 }
 ```
 
-## Credits
 
-This project was generated with [`python-package-template`](https://github.com/TezRomacH/python-package-template).
