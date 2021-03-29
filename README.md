@@ -12,7 +12,7 @@
 [![Semantic Versions](https://img.shields.io/badge/%F0%9F%9A%80-semantic%20versions-informational.svg)](https://github.com/karthikraja95/fsdl_deforestration_detection/releases)
 [![License](https://img.shields.io/github/license/karthikraja95/fsdl_deforestration_detection)](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/LICENSE)
 
-Predicting Deforestration from Satellite Images. Final Project for Full Stack Deep Learning. Authors Karthik Bhaskar and Andre Ferreira
+Predicting Deforestration from Satellite Images. An End-to-End Deep Learning Project. 
 
 </div>
 
