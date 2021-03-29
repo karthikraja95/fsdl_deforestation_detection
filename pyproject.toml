@@ -35,7 +35,7 @@ classifiers = [  # Update me
 python = "^3.7"
 importlib_metadata = {version = "^1.6.0", python = "<3.8"}
 typer = {extras = ["all"], version = "^0.3.2"}
-rich = "^9.8.2"
+rich = "^10.0.0"
 pytorch-lightning = "^1.2.5"
 torchvision = "^0.9.1"
 torchsat = "^0.0.1"
