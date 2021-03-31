@@ -710,7 +710,7 @@ python-versions = "*"
 
 [[package]]
 name = "ipykernel"
-version = "5.5.2"
+version = "5.5.3"
 description = "IPython Kernel for Jupyter"
 category = "main"
 optional = false
@@ -2476,7 +2476,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "6d584a7e5a321e78d43b4779650a731002382316221075f337b1d33e83918a5e"
+content-hash = "2a7a62b5ed2922770793250ae1920e5aaed2d3d1916a75fe26e2a7657a4af25f"
 
 [metadata.files]
 absl-py = [
@@ -2911,8 +2911,8 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 ipykernel = [
-    {file = "ipykernel-5.5.2-py3-none-any.whl", hash = "sha256:c234c8d23d8bacce76d00380a4730986975fd10a0bd45777bac9f843453b665d"},
-    {file = "ipykernel-5.5.2.tar.gz", hash = "sha256:319f6aea97bae081630a26672045a5ae12f4d48c54e4414994c685705846fc43"},
+    {file = "ipykernel-5.5.3-py3-none-any.whl", hash = "sha256:21abd584543759e49010975a4621603b3cf871b1039cb3879a14094717692614"},
+    {file = "ipykernel-5.5.3.tar.gz", hash = "sha256:a682e4f7affd86d9ce9b699d21bcab6d5ec9fbb2bfcb194f2706973b252bc509"},
 ]
 ipython = [
     {file = "ipython-7.22.0-py3-none-any.whl", hash = "sha256:c0ce02dfaa5f854809ab7413c601c4543846d9da81010258ecdab299b542d199"},
