@@ -46,6 +46,8 @@ tensorflow = "^2.4.1"
 wandb = "^0.10.23"
 plotly = "^4.14.3"
 mlflow = "^1.15.0"
+pydocstyle = "^6.0.0"
+ipykernel = "^5.5.3"
 
 [tool.poetry.dev-dependencies]
 darglint = "^1.5.8"
