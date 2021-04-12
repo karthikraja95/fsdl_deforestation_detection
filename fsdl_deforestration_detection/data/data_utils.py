@@ -85,7 +85,10 @@ def get_amazon_sample(
 
 
 def encode_tags(
-    df: pd.DataFrame, tags_col_name: str = "tags", tags: List = TAGS
+    df: pd.DataFrame,
+    tags_col_name: str = "tags",
+    tags: List = TAGS,
+    drop_tags_col: bool = False,
 ) -> pd.DataFrame:
     """Convert the tags (or labels) in a dataframe into a one hot encoded representation.
 
@@ -94,6 +97,8 @@ def encode_tags(
         tags_col_name (str, optional): Name of the column that contains the tags.
         Defaults to 'tags'.
         tags (List, optional): Names of the possible tags. Defaults to TAGS.
+        drop_tags_col (bool, optional): If set to True, the original `tags` column is
+        removed. Defaults to False.
 
     Returns:
         pd.DataFrame: Dataframe with the tags one hot encoded in new columns.
@@ -102,6 +107,8 @@ def encode_tags(
         df[label] = df[tags_col_name].apply(
             lambda x: 1 if label in x.split(" ") else 0
         )
+    if drop_tags_col:
+        df.drop(columns=tags_col_name, inplace=True)
     return df
 
 
