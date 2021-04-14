@@ -2422,7 +2422,7 @@ testing = ["pytest", "pytest-cover", "coverage (>=5.0)"]
 
 [[package]]
 name = "wandb"
-version = "0.10.23"
+version = "0.10.26"
 description = "A CLI and library for interacting with the Weights and Biases API."
 category = "main"
 optional = false
@@ -2549,7 +2549,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b41988dedd538c1bec8c73b277423a56e682adf18f642b7e17253984e29324b3"
+content-hash = "e8de9d2db9041b6e8811edb4daffd257d211cb1b53fc7b5bc10e3796a43705d9"
 
 [metadata.files]
 absl-py = [
@@ -4156,8 +4156,8 @@ waitress = [
     {file = "waitress-2.0.0.tar.gz", hash = "sha256:69e1f242c7f80273490d3403c3976f3ac3b26e289856936d1f620ed48f321897"},
 ]
 wandb = [
-    {file = "wandb-0.10.23-py2.py3-none-any.whl", hash = "sha256:13edc781aa54c9d732b05a3b46fd46aa373f66995f43d210c12ea4e7cd99bceb"},
-    {file = "wandb-0.10.23.tar.gz", hash = "sha256:465171d20fb4e315b213ba4fa8e73d6eb02a5e022510717bf0aae5d6b0850bcb"},
+    {file = "wandb-0.10.26-py2.py3-none-any.whl", hash = "sha256:613f688df88818be972379f77c9c504d3258c40d27fa722442e7e8ce62b0d37e"},
+    {file = "wandb-0.10.26.tar.gz", hash = "sha256:dd41b6e6d27b3302561170025aaf7beb5a3dbb04c62660c95640f17854ab625d"},
 ]
 watchdog = [
     {file = "watchdog-2.0.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:1f518a6940cde8720b8826a705c164e6b9bd6cf8c00f14269ffac51e017e06ec"},
