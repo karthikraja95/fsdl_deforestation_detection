@@ -163,7 +163,7 @@ for task in tqdm(args.task, desc="Tasks"):
                     min_lr=1e-7,
                 ),
                 TqdmCallback(),
-                WandbCallback(),
+                WandbCallback(data_type="image", predictions=5),
             ],
         )
         count += 1
@@ -187,8 +187,10 @@ for task in tqdm(args.task, desc="Tasks"):
                 min_lr=1e-7,
             ),
             TqdmCallback(),
-            WandbCallback(),
+            WandbCallback(data_type="image", predictions=5),
         ],
         initial_epoch=args.epochs[count - 1],
     )
+    # Test the model
+    model.evaluate(test_set, callbacks=[WandbCallback()])
     count += 1
