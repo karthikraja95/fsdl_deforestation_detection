@@ -2135,12 +2135,44 @@ typing-extensions = ">=3.7.4,<3.8.0"
 wrapt = ">=1.12.1,<1.13.0"
 
 [[package]]
+name = "tensorflow-addons"
+version = "0.12.1"
+description = "TensorFlow Addons."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+typeguard = ">=2.7"
+
+[package.extras]
+tensorflow = ["tensorflow (>=2.3.0,<2.5.0)"]
+tensorflow-cpu = ["tensorflow-cpu (>=2.3.0,<2.5.0)"]
+tensorflow-gpu = ["tensorflow-gpu (>=2.3.0,<2.5.0)"]
+
+[[package]]
 name = "tensorflow-estimator"
 version = "2.4.0"
 description = "TensorFlow Estimator."
 category = "main"
 optional = false
 python-versions = "*"
+
+[[package]]
+name = "tensorflow-hub"
+version = "0.12.0"
+description = "TensorFlow Hub is a library to foster the publication, discovery, and consumption of reusable parts of machine learning models."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+numpy = ">=1.12.0"
+protobuf = ">=3.8.0"
+
+[package.extras]
+make_image_classifier = ["keras-preprocessing"]
+make_nearest_neighbour_index = ["apache-beam", "annoy"]
 
 [[package]]
 name = "termcolor"
@@ -2322,6 +2354,18 @@ description = "a fork of Python 2 and 3 ast modules with type comment support"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[[package]]
+name = "typeguard"
+version = "2.12.0"
+description = "Run-time type checker for Python"
+category = "main"
+optional = false
+python-versions = ">=3.5.3"
+
+[package.extras]
+doc = ["sphinx-rtd-theme", "sphinx-autodoc-typehints (>=1.2.0)"]
+test = ["pytest", "typing-extensions", "mypy"]
 
 [[package]]
 name = "typer"
@@ -2549,7 +2593,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b41988dedd538c1bec8c73b277423a56e682adf18f642b7e17253984e29324b3"
+content-hash = "37851d6a02da5f23328aa4db62a064063f70db9a86cd48d154da6a690b430b29"
 
 [metadata.files]
 absl-py = [
@@ -3965,8 +4009,22 @@ tensorflow = [
     {file = "tensorflow-2.4.1-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:efa9daa4b3701a4e439b24b74c1e4b66844aee8ae5263fb3cc12281ac9cc9f67"},
     {file = "tensorflow-2.4.1-cp38-cp38-win_amd64.whl", hash = "sha256:eedcf578afde5e6e69c75d796bed41093451cd1ab54afb438760e40fb74a09de"},
 ]
+tensorflow-addons = [
+    {file = "tensorflow_addons-0.12.1-cp36-cp36m-macosx_10_13_x86_64.whl", hash = "sha256:55b15a22fe03d8c71e899d94738dce538874af0f6e525b9779159b4679dc77e5"},
+    {file = "tensorflow_addons-0.12.1-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:57b177a62293159c108d99b51a121b721d44d92c780ef5db73ba41d016ff79ea"},
+    {file = "tensorflow_addons-0.12.1-cp36-cp36m-win_amd64.whl", hash = "sha256:6928f581cfd2e7c20aa7c5cc956245fe99b0b40ba7990ec122ec25f14736a22d"},
+    {file = "tensorflow_addons-0.12.1-cp37-cp37m-macosx_10_13_x86_64.whl", hash = "sha256:8dc515f5ad86fba843ba75a9251b70d8055b86be54094019bdac340b33e0c3f0"},
+    {file = "tensorflow_addons-0.12.1-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:ba3f4d17c971e997ba8b1a8a97fa8bd86190f32f297179ed28905e71936ff5ec"},
+    {file = "tensorflow_addons-0.12.1-cp37-cp37m-win_amd64.whl", hash = "sha256:259233e45494354b25c1e45581f0ff7a99e50a38256b353b25113f971c4d364b"},
+    {file = "tensorflow_addons-0.12.1-cp38-cp38-macosx_10_13_x86_64.whl", hash = "sha256:4203a481e2afe328473dd04f26dfd3502ee5731c2a8c5340a472e2a9ca982584"},
+    {file = "tensorflow_addons-0.12.1-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:288919ec1debf0bc56357fc1db6dccd27389d446b214042cd4de39d7edabdad6"},
+    {file = "tensorflow_addons-0.12.1-cp38-cp38-win_amd64.whl", hash = "sha256:425e8dbe1f14397c80635f2ba316472270258f682869b8f8040e9b3d5c87b0b2"},
+]
 tensorflow-estimator = [
     {file = "tensorflow_estimator-2.4.0-py2.py3-none-any.whl", hash = "sha256:5b7b7bf2debe19a8794adacc43e8ba6459daa4efaf54d3302623994a359b17f0"},
+]
+tensorflow-hub = [
+    {file = "tensorflow_hub-0.12.0-py2.py3-none-any.whl", hash = "sha256:822fe5f7338c95efcc3a534011c6689e4309ba2459def87194179c4de8a6e1fc"},
 ]
 termcolor = [
     {file = "termcolor-1.1.0.tar.gz", hash = "sha256:1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"},
@@ -4125,6 +4183,10 @@ typed-ast = [
     {file = "typed_ast-1.4.2-cp39-cp39-win32.whl", hash = "sha256:cc7b98bf58167b7f2db91a4327da24fb93368838eb84a44c472283778fc2446b"},
     {file = "typed_ast-1.4.2-cp39-cp39-win_amd64.whl", hash = "sha256:7147e2a76c75f0f64c4319886e7639e490fee87c9d25cb1d4faef1d8cf83a440"},
     {file = "typed_ast-1.4.2.tar.gz", hash = "sha256:9fc0b3cb5d1720e7141d103cf4819aea239f7d136acf9ee4a69b047b7986175a"},
+]
+typeguard = [
+    {file = "typeguard-2.12.0-py3-none-any.whl", hash = "sha256:7d1cf82b35e9ff3cd083133ebda54ad1d7a40296471397e6c6b229cf07fe5307"},
+    {file = "typeguard-2.12.0.tar.gz", hash = "sha256:fca77fd4ccba63465b421cdbbab5a1a8e3994e6d6f18b45da2bb475c09f147ef"},
 ]
 typer = [
     {file = "typer-0.3.2-py3-none-any.whl", hash = "sha256:ba58b920ce851b12a2d790143009fa00ac1d05b3ff3257061ff69dbdfc3d161b"},

@@ -46,10 +46,6 @@ class ResNet(tf.keras.Model):
         self.pretrain_dataset = pretrain_dataset
         self.pooling = pooling
         self.task = task
-        if pretrain_dataset is None:
-            include_top = True
-        else:
-            include_top = False
         if self.task == "orig_labels":
             self.n_outputs = 17
         elif self.task == "deforestation":
@@ -59,25 +55,24 @@ class ResNet(tf.keras.Model):
                 f'ERROR: Unrecognized task "{task}". Please select one of "orig_labels" or "deforestation".'
             )
         if pretrain_dataset == "bigearthnet":
-            self.core = hub.Module(
+            self.core = hub.KerasLayer(
                 "https://tfhub.dev/google/remote_sensing/bigearthnet-resnet50/1"
             )
             # TensorFlow Hub modules require data in a [0, 1] range
-            self.preprocess_input = Normalize
+            # stats estimated from subset of data in `02_eda_amazon_planet` notebook
+            self.preprocess_input = Normalization(
+                mean=[79.67114306, 87.08461826, 76.46177919],
+                variance=[1857.54070494, 1382.94249315, 1266.69265399],
+            )
         else:
             self.core = ResNet50(
-                include_top=include_top,
+                include_top=False,
                 weights=pretrain_dataset,
                 pooling=self.pooling,
-                classes=self.n_outputs,
             )
             # Using TensorFlow's ResNet-specific preprocessing
             self.preprocess_input = preprocess_input
-        if pretrain_dataset is not None:
-            self.classifier = layers.Dense(self.n_outputs)
-        else:
-            # Don't do anything, as the ResNet is already the classifier
-            self.classifier = lambda x: x
+        self.classifier = layers.Dense(self.n_outputs, activation="sigmoid")
 
     def call(self, inputs):
         x = self.preprocess_input(inputs)

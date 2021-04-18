@@ -50,6 +50,8 @@ ipykernel = "^5.5.3"
 kaggle = "^1.5.12"
 ipywidgets = "^7.6.3"
 scikit-image = "^0.18.1"
+tensorflow-hub = "^0.12.0"
+tensorflow-addons = "^0.12.1"
 
 [tool.poetry.dev-dependencies]
 darglint = "^1.5.8"
