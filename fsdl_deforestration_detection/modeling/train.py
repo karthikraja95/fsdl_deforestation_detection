@@ -5,10 +5,12 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow_addons.metrics import FBetaScore
-from tensorflow.keras import optimizers
+from tensorflow.keras import optimizers, callbacks
 from tensorflow.data.experimental import AUTOTUNE
 from tqdm.auto import tqdm
 from tqdm.keras import TqdmCallback
+import wandb
+from wandb.keras import WandbCallback
 
 sys.path.append("../data/")
 sys.path.append("../modeling/")
@@ -28,7 +30,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "--epochs",
-    default=20,
+    default=[50, 50],
     help="number of epochs to train on",
 )
 parser.add_argument(
@@ -43,7 +45,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "--task",
-    default="orig_label",
+    default=["orig_label", "deforestation"],
     help="random seed for reproducible results",
 )
 args = parser.parse_args()
@@ -129,36 +131,64 @@ for task in tqdm(args.task, desc="Tasks"):
         pretrain_dataset = None
     # Load the model
     model = ResNet(pretrain_dataset=pretrain_dataset, pooling="max", task=task)
+    model_metrics = [
+        "accuracy",
+        FBetaScore(num_classes=model.n_outputs, average="macro", beta=2.0),
+    ]
+    wandb.init(
+        project="fsdl_deforestation_detection",
+        tags="mvp",
+        reinit=True,
+        config={**vars(args), **dict(current_task=task)},
+    )
     if args.pretrained or count > 0:
         # Train initially the final layer
         model.core.trainable = False
         model.classifier = layers.Dense(model.n_outputs, activation="sigmoid")
-        model_metrics = [
-            "accuracy",
-            FBetaScore(num_classes=model.n_outputs, average="macro", beta=2.0),
-        ]
         model.compile(optimizer=opt, loss=loss, metrics=model_metrics)
         model.fit(
             train_set,
             validation_data=val_set,
             epochs=args.epochs[count],
             verbose=0,
-            callbacks=[TqdmCallback()],
+            callbacks=[
+                callbacks.EarlyStopping(
+                    monitor="val_loss", min_delta=1e-4, patience=9
+                ),
+                callbacks.ReduceLROnPlateau(
+                    monitor="val_loss",
+                    min_delta=1e-4,
+                    patience=5,
+                    factor=0.1,
+                    min_lr=1e-7,
+                ),
+                TqdmCallback(),
+                WandbCallback(),
+            ],
         )
         count += 1
     # Train all the model's weights
     model.core.trainable = True
-    model_metrics = [
-        "accuracy",
-        FBetaScore(num_classes=model.n_outputs, average="macro", beta=2.0),
-    ]
     model.compile(optimizer=opt, loss=loss, metrics=model_metrics)
     model.fit(
         train_set,
         validation_data=val_set,
         epochs=args.epochs[count],
         verbose=0,
-        callbacks=[TqdmCallback()],
+        callbacks=[
+            callbacks.EarlyStopping(
+                monitor="val_loss", min_delta=1e-4, patience=9
+            ),
+            callbacks.ReduceLROnPlateau(
+                monitor="val_loss",
+                min_delta=1e-4,
+                patience=5,
+                factor=0.1,
+                min_lr=1e-7,
+            ),
+            TqdmCallback(),
+            WandbCallback(),
+        ],
         initial_epoch=args.epochs[count - 1],
     )
     count += 1
