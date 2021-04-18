@@ -2,13 +2,14 @@ import os
 import subprocess
 import numpy as np
 import pandas as pd
+import tensorflow as tf
 from skimage.io import imread
 from typing import List, Tuple
 
 # NOTE This is just for the Planet Amazon dataset;
 # we need to refactor this when we use other datasets
 DATA_PATH = "/home/andreferreira/data/"
-IMG_PATH = "train-jpg/"
+IMG_PATH = "fixed-train-jpg/"
 TIFF_PATH = "train-tif-v2/"
 LABELS_PATH = "train_v2.csv/train_v2.csv"
 TAGS = [
@@ -60,6 +61,14 @@ def decompress_tar_7z(fn: str, input_dir: str, output_dir: str):
     )
 
 
+def decode_img(file_name, label):
+    image_string = tf.io.read_file(file_name)
+    image_decoded = tf.image.decode_jpeg(image_string)
+    image_decoded = tf.cast(image_decoded, tf.float32)
+    image_decoded = tf.image.resize(image_decoded, [256, 256])
+    return image_decoded, label
+
+
 def get_amazon_sample(
     df: pd.DataFrame, load_tiff: bool = False
 ) -> Tuple[int, np.ndarray, np.ndarray]:
@@ -73,15 +82,15 @@ def get_amazon_sample(
         or the JPG (False) format. Defaults to False.
 
     Yields:
-        Iterator[Tuple[int, np.ndarray, np.ndarray]]: Returns the current iteration's index,
-        image data and the tags (i.e. the labels as in the original data).
+        Iterator[Tuple[np.ndarray, np.ndarray]]: Returns the current image data and the
+        tags (i.e. the labels as in the original data).
     """
     for row in df.itertuples():
         if load_tiff:
             img_data = imread(f"{DATA_PATH}{TIFF_PATH}{row[1]}.tif")
         else:
             img_data = imread(f"{DATA_PATH}{IMG_PATH}{row[1]}.jpg")
-        yield row[0], img_data, np.array(row[2:])
+        yield img_data, np.array(row[2:])
 
 
 def encode_tags(
