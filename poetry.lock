@@ -478,7 +478,7 @@ python-versions = "*"
 
 [[package]]
 name = "fsspec"
-version = "0.9.0"
+version = "2021.4.0"
 description = "File-system specification"
 category = "main"
 optional = false
@@ -486,7 +486,6 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 aiohttp = {version = "*", optional = true, markers = "extra == \"http\""}
-importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
 requests = {version = "*", optional = true, markers = "extra == \"http\""}
 
 [package.extras]
@@ -494,6 +493,7 @@ abfs = ["adlfs"]
 adl = ["adlfs"]
 dask = ["dask", "distributed"]
 dropbox = ["dropboxdrivefs", "requests", "dropbox"]
+entrypoints = ["importlib-metadata"]
 gcs = ["gcsfs"]
 git = ["pygit2"]
 github = ["requests"]
@@ -2466,7 +2466,7 @@ testing = ["pytest", "pytest-cover", "coverage (>=5.0)"]
 
 [[package]]
 name = "wandb"
-version = "0.10.23"
+version = "0.10.26"
 description = "A CLI and library for interacting with the Weights and Biases API."
 category = "main"
 optional = false
@@ -2852,8 +2852,8 @@ flatbuffers = [
     {file = "flatbuffers-1.12.tar.gz", hash = "sha256:63bb9a722d5e373701913e226135b28a6f6ac200d5cc7b4d919fa38d73b44610"},
 ]
 fsspec = [
-    {file = "fsspec-0.9.0-py3-none-any.whl", hash = "sha256:7e98ea66f3f0156601e126fb2799e5d0ed87c3108b519f64c834b4284509fc82"},
-    {file = "fsspec-0.9.0.tar.gz", hash = "sha256:3f7a62547e425b0b336a6ac2c2e6c6ac824648725bc8391af84bb510a63d1a56"},
+    {file = "fsspec-2021.4.0-py3-none-any.whl", hash = "sha256:70dae1d8d51072c4a1196acb9ba1bf8f5b9cdd83c4bb67e8a31dac604a49594b"},
+    {file = "fsspec-2021.4.0.tar.gz", hash = "sha256:8b1a69884855d1a8c038574292e8b861894c3373282d9a469697a2b41d5289a6"},
 ]
 future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
@@ -4218,8 +4218,8 @@ waitress = [
     {file = "waitress-2.0.0.tar.gz", hash = "sha256:69e1f242c7f80273490d3403c3976f3ac3b26e289856936d1f620ed48f321897"},
 ]
 wandb = [
-    {file = "wandb-0.10.23-py2.py3-none-any.whl", hash = "sha256:13edc781aa54c9d732b05a3b46fd46aa373f66995f43d210c12ea4e7cd99bceb"},
-    {file = "wandb-0.10.23.tar.gz", hash = "sha256:465171d20fb4e315b213ba4fa8e73d6eb02a5e022510717bf0aae5d6b0850bcb"},
+    {file = "wandb-0.10.26-py2.py3-none-any.whl", hash = "sha256:613f688df88818be972379f77c9c504d3258c40d27fa722442e7e8ce62b0d37e"},
+    {file = "wandb-0.10.26.tar.gz", hash = "sha256:dd41b6e6d27b3302561170025aaf7beb5a3dbb04c62660c95640f17854ab625d"},
 ]
 watchdog = [
     {file = "watchdog-2.0.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:1f518a6940cde8720b8826a705c164e6b9bd6cf8c00f14269ffac51e017e06ec"},
