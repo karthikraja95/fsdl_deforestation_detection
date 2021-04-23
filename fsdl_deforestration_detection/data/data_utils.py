@@ -31,6 +31,15 @@ TAGS = [
     "slash_burn",
     "water",
 ]
+DEFORESTATION_TAGS = [
+    "agriculture",
+    "artisinal_mine",
+    "conventional_mine",
+    "cultivation",
+    "road",
+    "selective_logging",
+    "slash_burn",
+]
 
 
 def decompress_tar_7z(fn: str, input_dir: str, output_dir: str):
@@ -130,14 +139,6 @@ def add_deforestation_label(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Dataframe with the new deforestation column.
     """
-    df["deforestation"] = (
-        (df["agriculture"] == 1)
-        | (df["artisinal_mine"] == 1)
-        | (df["conventional_mine"] == 1)
-        | (df["cultivation"] == 1)
-        | (df["road"] == 1)
-        | (df["selective_logging"] == 1)
-        | (df["slash_burn"] == 1)
-    )
+    df["deforestation"] = df.query(" == 1 | ".join(DEFORESTATION_TAGS))
     df["deforestation"] = df["deforestation"].astype("uint8")
     return df
