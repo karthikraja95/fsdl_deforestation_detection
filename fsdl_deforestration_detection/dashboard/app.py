@@ -1,8 +1,9 @@
-from fsdl_deforestration_detection.dashboard.layouts import overview, playground
 import streamlit as st
+from dashboard_utils import load_css
 import layouts
 
 PAGES = dict(Playground=layouts.playground, Overview=layouts.overview)
+load_css("style.css")
 
 st.sidebar.title("About")
 st.sidebar.info(
