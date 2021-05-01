@@ -139,6 +139,10 @@ def add_deforestation_label(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Dataframe with the new deforestation column.
     """
-    df["deforestation"] = df.query(" == 1 | ".join(DEFORESTATION_TAGS))
+    df["deforestation"] = 0
+    deforestation_idx = df.query(
+        " == 1 | ".join(DEFORESTATION_TAGS) + " == 1"
+    ).index
+    df.loc[deforestation_idx, "deforestation"] = 1
     df["deforestation"] = df["deforestation"].astype("uint8")
     return df

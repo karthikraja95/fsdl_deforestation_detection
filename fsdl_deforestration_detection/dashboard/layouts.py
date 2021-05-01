@@ -2,6 +2,7 @@ import streamlit as st
 import sys
 import numpy as np
 import pandas as pd
+from fastai.vision.all import load_learner
 from skimage.io import imread
 import plotly.express as px
 
@@ -40,7 +41,7 @@ def playground():
     if model_type == "Deforestation":
         model = lambda x: np.random.rand(1)
     else:
-        model = lambda x: np.random.rand(17)
+        model = load_learner("../modeling/resnet50-128.pkl")
     if input_file is not None:
         # Load and display the uploaded image
         with st.spinner("Loading image..."):
