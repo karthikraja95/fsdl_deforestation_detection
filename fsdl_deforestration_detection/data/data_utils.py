@@ -8,8 +8,9 @@ from typing import List, Tuple
 
 # NOTE This is just for the Planet Amazon dataset;
 # we need to refactor this when we use other datasets
-DATA_PATH = "/home/andreferreira/data/"
-IMG_PATH = "fixed-train-jpg/"
+DATA_PATH = "/Users/andreferreira/Documents_Offline/Datasets/fsdl/"
+PLANET_PATH = "planet-understanding-the-amazon-from-space/"
+IMG_PATH = "train-jpg/"
 TIFF_PATH = "train-tif-v2/"
 LABELS_PATH = "train_v2.csv/train_v2.csv"
 TAGS = [
@@ -96,9 +97,11 @@ def get_amazon_sample(
     """
     for row in df.itertuples():
         if load_tiff:
-            img_data = imread(f"{DATA_PATH}{TIFF_PATH}{row[1]}.tif")
+            img_data = imread(
+                f"{DATA_PATH}{PLANET_PATH}{TIFF_PATH}{row[1]}.tif"
+            )
         else:
-            img_data = imread(f"{DATA_PATH}{IMG_PATH}{row[1]}.jpg")
+            img_data = imread(f"{DATA_PATH}{PLANET_PATH}{IMG_PATH}{row[1]}.jpg")
         yield img_data, np.array(row[2:])
 
 

@@ -6,7 +6,7 @@ PAGES = dict(Playground=layouts.playground, Overview=layouts.overview)
 load_css("style.css")
 
 st.sidebar.title("About")
-st.sidebar.info(
+st.sidebar.markdown(
     "Full Stack Deep Learning course project on detecting deforestation through satellite imagery."
 )
 st.sidebar.title("Navigation")

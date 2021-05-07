@@ -52,6 +52,7 @@ tensorflow-hub = "^0.12.0"
 tensorflow-addons = "^0.12.1"
 watchdog = "^2.0.2"
 fastai = "2.2.5"
+colorlover = "^0.3.0"
 
 [tool.poetry.dev-dependencies]
 darglint = "^1.5.8"
