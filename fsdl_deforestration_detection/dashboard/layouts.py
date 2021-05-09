@@ -1,7 +1,7 @@
 import streamlit as st
 import sys
+from copy import deepcopy
 import numpy as np
-import pandas as pd
 from fastai.vision.all import load_learner
 import torch
 from skimage.io import imread
@@ -11,11 +11,12 @@ sys.path.append("../data/")
 from data_utils import DATA_PATH, IMG_PATH
 from dashboard_utils import (
     set_paths,
+    load_image_names,
+    load_data,
     run_model,
     show_model_output,
     show_labels,
     get_performance_metrics,
-    load_data,
     get_gauge_plot,
     get_number_plot,
     get_hist_plot,
@@ -35,7 +36,9 @@ def playground():
     )
     # Set the sidebar inputs
     st.sidebar.title("Inputs")
-    model_type = st.sidebar.radio("Model", ["Deforestation", "Land scenes"])
+    # NOTE For the sake of time, we're just going to use the `Land scenes` model
+    # model_type = st.sidebar.radio("Model", ["Deforestation", "Land scenes"])
+    model_type = "Land scenes"
     input_file = st.sidebar.file_uploader(
         "Upload an image",
         type=["jpg", "jpeg", "png", "tif"],
@@ -46,10 +49,10 @@ def playground():
     )
     # Set the model
     # NOTE Using random data while the models aren't usable
-    if model_type == "Deforestation":
-        model = lambda x: np.random.rand(1)
-    else:
-        model = load_learner("../modeling/resnet50-128.pkl")
+    model = load_learner("../modeling/resnet50-128.pkl")
+    # Speed up model inference by deactivating gradients
+    model.model.eval()
+    torch.no_grad()
     if input_file is not None:
         # Load and display the uploaded image
         with st.spinner("Loading image..."):
@@ -80,13 +83,13 @@ def playground():
             session_state.user_feedback_positive = True
             session_state.user_feedback_negative = False
             st.info(
-                "Thank you for your feedback! This can help us "
+                "ℹ️ Thank you for your feedback! This can help us "
                 "improve our models 🙌"
             )
             # TODO Upload the data to our database
             if st.button("Delete my image and feedback data"):
                 st.info(
-                    "Alright, we deleted it. Just know that we had "
+                    "ℹ️ Alright, we deleted it. Just know that we had "
                     "high expectations that you could help us improve "
                     "deforestation detection models. We thought we "
                     "were friends 🙁"
@@ -97,7 +100,7 @@ def playground():
             session_state.user_feedback_positive = False
             session_state.user_feedback_negative = True
             st.info(
-                "Thank you for your feedback! This can help us "
+                "ℹ️ Thank you for your feedback! This can help us "
                 "improve our models 🙌\n"
                 "It would be even better if you could tell us "
                 "what makes you think the model failed. Mind "
@@ -112,20 +115,35 @@ def playground():
             # TODO Update the data with the user comment
             if st.button("Delete my image and feedback data"):
                 st.info(
-                    "Alright, we deleted it. Just know that we had "
+                    "ℹ️ Alright, we deleted it. Just know that we had "
                     "high expectations that you could help us improve "
                     "deforestation detection models. We thought we "
                     "were friends 🙁"
                 )
+        st.info(
+            "ℹ️ Green labels represent categories that we don't associate with deforestation "
+            "risk (e.g. natural occurences or old structures), while red labels can serve as "
+            "a potential deforestation signal (e.g. new constructions, empty patches in forests)."
+        )
         # Model interpretation
         with st.beta_expander("Peek inside the black box"):
             explain_cols = st.beta_columns(2)
             with explain_cols[0]:
                 st.subheader("Model structure")
-                # TODO Add a graph of the model structure and add references to ResNet
+                st.info(
+                    "ℹ️ Our model is largely based on the [ResNet](https://paperswithcode.com/method/resnet) "
+                    "archirtecture, using a ResNet50 from [FastAI](https://docs.fast.ai/). "
+                    "Bellow you can see the model's layer definition."
+                )
+                st.text(model.model)
             with explain_cols[1]:
                 st.subheader("Output interpretation")
                 # TODO Add the result of applying SHAP to the model in the current sample
+                st.info(
+                    "ℹ️ Given some difficulties with using [SHAP](https://github.com/slundberg/shap) "
+                    "with [FastAI](https://docs.fast.ai/), we haven't implemented this yet. "
+                    "Would you like to give it a try?"
+                )
 
 
 def overview():
@@ -134,7 +152,9 @@ def overview():
     init_info = st.empty()
     # Set the sidebar inputs
     st.sidebar.title("Inputs")
-    model_type = st.sidebar.radio("Model", ["Deforestation", "Land scenes"])
+    # NOTE For the sake of time, we're just going to use the `Land scenes` model
+    # model_type = st.sidebar.radio("Model", ["Deforestation", "Land scenes"])
+    model_type = "Land scenes"
     dataset_name = st.sidebar.radio("Dataset", ["Amazon", "Oil palm"])
     chosen_set = None
     if dataset_name == "Amazon":
@@ -145,7 +165,9 @@ def overview():
             "which is the one in which our models were trained on. As such, you can look at performance "
             "on either the train or validation set."
         )
-        img_path, _, _, _ = set_paths(dataset_name, model_type)
+        img_path, labels_path, img_name_col, label_col = set_paths(
+            dataset_name, model_type
+        )
     else:
         init_info.info(
             "ℹ️ You've selected the "
@@ -154,29 +176,54 @@ def overview():
             "While it should be somewhat similar to the Amazon dataset, it can be interesting "
             "to compare results on potentially out-of-domain data."
         )
-        img_path, _, _, _ = set_paths(dataset_name, model_type)
+        img_path, labels_path, img_name_col, label_col = set_paths(
+            dataset_name, model_type
+        )
+    # Set the model
+    model = load_learner("../modeling/resnet50-128.pkl")
+    # Speed up model inference by deactivating gradients
+    model.model.eval()
+    torch.no_grad()
+    img_names = load_image_names(model, chosen_set, img_path, labels_path)
     sample_name = st.sidebar.selectbox(
         "Sample",
-        # TODO Get the real file names
-        ["train_0", "train_1", "train_2", "train_3", "train_4", "train_5"],
+        img_names,
     )
-    # Set the model
-    # NOTE Using random data while the models aren't usable
-    if model_type == "Deforestation":
-        model = lambda x: np.random.rand(1)
-    else:
-        model = load_learner("../modeling/resnet50-128.pkl")
     # Load all the data (or some samples) from the selected database
-    imgs, labels = load_data(dataset_name, model_type, chosen_set)
+    n_samples = 500
+    imgs, labels = deepcopy(
+        load_data(
+            dataset_name,
+            model_type,
+            img_path,
+            img_names,
+            labels_path,
+            img_name_col,
+            n_samples=n_samples,
+        )
+    )
     # Show some performance metrics
     # TODO Use all the set data to get the correct performance metrics
     st.header("Performance")
     metrics_cols = st.beta_columns(2)
     with st.spinner("Getting performance results..."):
-        # NOTE Dummy data
-        # acc = 0.956407
-        # fbeta = 0.926633
-        pred, acc, fbeta = get_performance_metrics(model, imgs, labels)
+        if dataset_name == "Amazon":
+            # NOTE This are the metrics obtained for the validation set,
+            # when training the model in Colab; ideally, this should still
+            # be calculated dynamically in here, but it's proving to be
+            # slow and impractical in the approach that we were taking
+            acc = 0.956407
+            fbeta = 0.926633
+            # pred, acc, fbeta = get_performance_metrics(
+            #     model, imgs, labels, dataset_name
+            # )
+            pred, _, _ = get_performance_metrics(
+                model, imgs, labels, dataset_name
+            )
+        else:
+            pred, acc, fbeta = get_performance_metrics(
+                model, imgs, labels, dataset_name
+            )
         acc, fbeta = 100 * acc, 100 * fbeta
         with metrics_cols[0]:
             fig = get_gauge_plot(acc, title="Accuracy")
@@ -184,11 +231,18 @@ def overview():
         with metrics_cols[1]:
             fig = get_gauge_plot(fbeta, title="F2")
             st.plotly_chart(fig, use_container_width=True)
+        if dataset_name == "Amazon":
+            st.info(
+                "ℹ️ These are the validation metrics [obtained when training the model](https://colab.research.google.com/github/karthikraja95/fsdl_deforestration_detection/blob/master/fsdl_deforestration_detection/experimental/FSDL_Final_Model.ipynb)."
+            )
+        else:
+            st.info(
+                "ℹ️ Showing performance metrics here by mapping the original labels to a "
+                "binary, deforestation label. This should be somewhat relatable to the "
+                "presence of oil palm plantations, which is the label in this dataset."
+            )
     # Show number of samples
-    # TODO Consider replacing this value with all the images
-    # associated with the current set, even if some plots
-    # rely on smaller subsets
-    fig = get_number_plot(len(imgs), title="Samples")
+    fig = get_number_plot(len(img_names), title="Samples")
     st.plotly_chart(fig, use_container_width=True)
     # Show label analysis
     st.header("Label analysis")
@@ -211,22 +265,28 @@ def overview():
             title="Predicted labels distribution",
         )
         st.plotly_chart(fig, use_container_width=True)
+    st.info(
+        f"ℹ️ Using only a subset of {n_samples} samples, so as to make this plot practically fast."
+    )
     # Show imagery analysis
     # TODO Cache the imagery plots
     st.header("Imagery analysis")
     st.subheader("Image size")
     img_size_cols = st.beta_columns(3)
     with img_size_cols[0]:
-        fig = get_number_plot(imgs.shape[2], title="Height")
+        fig = get_number_plot(imgs.shape[1], title="Height")
         st.plotly_chart(fig, use_container_width=True)
     with img_size_cols[1]:
-        fig = get_number_plot(imgs.shape[3], title="Width")
+        fig = get_number_plot(imgs.shape[2], title="Width")
         st.plotly_chart(fig, use_container_width=True)
     with img_size_cols[2]:
-        fig = get_number_plot(imgs.shape[1], title="Channels")
+        fig = get_number_plot(imgs.shape[3], title="Channels")
         st.plotly_chart(fig, use_container_width=True)
     fig = get_pixel_dist_plot(imgs)
     st.plotly_chart(fig, use_container_width=True)
+    st.info(
+        f"ℹ️ Using only a subset of {n_samples} samples, so as to make this plot practically fast."
+    )
     # TODO Show sample analysis
     # TODO Cache the model inference results
     st.header("Sample analysis")
@@ -234,24 +294,36 @@ def overview():
     with st.spinner("Loading image..."):
         # TODO Adjust the sample loading to the appropriate path according to the chosen dataset and set
         # TODO Load image from Google Cloud Storage bucket
-        img = imread(f"{DATA_PATH}{img_path}{sample_name}")
+        img = imread(f"{DATA_PATH}{img_path}{sample_name}.jpg")
         fig = px.imshow(img)
         st.plotly_chart(fig)
     # Run the model on the image
     output = run_model(model, img)
-    sample_analysis_cols = st.beta_columns(2)
-    with sample_analysis_cols[0]:
-        st.subheader("Model output:")
-        show_model_output(model_type, output, n_labels_per_row=2)
-    with sample_analysis_cols[1]:
-        st.subheader("Real labels:")
-        show_labels(dataset_name, sample_name, n_labels_per_row=2)
+    st.subheader("Model output:")
+    show_model_output(model_type, output)
+    st.subheader("Real labels:")
+    show_labels(dataset_name, sample_name, labels_path, img_name_col, label_col)
+    st.info(
+        "ℹ️ Green labels represent categories that we don't associate with deforestation "
+        "risk (e.g. natural occurences or old structures), while red labels can serve as "
+        "a potential deforestation signal (e.g. new constructions, empty patches in forests)."
+    )
     # Model interpretation
     with st.beta_expander("Peek inside the black box"):
         explain_cols = st.beta_columns(2)
         with explain_cols[0]:
             st.subheader("Model structure")
-            # TODO Add a graph of the model structure and add references to ResNet
+            st.info(
+                "ℹ️ Our model is largely based on the [ResNet](https://paperswithcode.com/method/resnet) "
+                "archirtecture, using a ResNet50 from [FastAI](https://docs.fast.ai/). "
+                "Bellow you can see the model's layer definition."
+            )
+            st.text(model.model)
         with explain_cols[1]:
             st.subheader("Output interpretation")
             # TODO Add the result of applying SHAP to the model in the current sample
+            st.info(
+                "ℹ️ Given some difficulties with using [SHAP](https://github.com/slundberg/shap) "
+                "with [FastAI](https://docs.fast.ai/), we haven't implemented this yet. "
+                "Would you like to give it a try?"
+            )

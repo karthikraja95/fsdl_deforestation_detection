@@ -38,7 +38,7 @@ typer = {extras = ["all"], version = "^0.3.2"}
 rich = "^10.0.0"
 pytorch-lightning = "^1.2.5"
 torchsat = "^0.0.1"
-streamlit = "^0.79.0"
+streamlit = "^0.81.1"
 tensorflow = "^2.4.1"
 wandb = "^0.10.23"
 plotly = "^4.14.3"
@@ -53,6 +53,7 @@ tensorflow-addons = "^0.12.1"
 watchdog = "^2.0.2"
 fastai = "2.2.5"
 colorlover = "^0.3.0"
+torchviz = "^0.0.2"
 
 [tool.poetry.dev-dependencies]
 darglint = "^1.5.8"
