@@ -12,7 +12,7 @@
 [![Semantic Versions](https://img.shields.io/badge/%F0%9F%9A%80-semantic%20versions-informational.svg)](https://github.com/karthikraja95/fsdl_deforestration_detection/releases)
 [![License](https://img.shields.io/github/license/karthikraja95/fsdl_deforestration_detection)](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/LICENSE)
 
-Predicting Deforestration from Satellite Images. An End-to-End Deep Learning Project. 
+Predicting Deforestation from Satellite Images. An End-to-End Deep Learning Project. 
 
 </div>
 
@@ -356,7 +356,7 @@ This project is licensed under the terms of the `MIT` license. See [LICENSE](htt
 ## 📃 Citation
 
 ```
-@misc{fsdl_deforestration_detection,
+@misc{fsdl_deforestation_detection,
   author = {Karthik Bhaskar, Andre Ferreira},
   title = {Predicting Deforestration from Satellite Images},
   year = {2021},
