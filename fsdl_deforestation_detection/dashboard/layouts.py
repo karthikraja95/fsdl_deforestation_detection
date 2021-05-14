@@ -61,7 +61,9 @@ def playground():
         "Made by [André Ferreira](https://andrecnf.com/) and [Karthik Bhaskar](https://www.kbhaskar.com/)."
     )
     # Set the model
-    model = load_learner("../modeling/resnet50-128.pkl")
+    model = load_learner(
+        "fsdl_deforestation_detection/modeling/resnet50-128.pkl"
+    )
     # Speed up model inference by deactivating gradients
     model.model.eval()
     torch.no_grad()
@@ -227,7 +229,9 @@ def overview():
             label_col,
         ) = set_paths(dataset_name, model_type)
     # Set the model
-    model = load_learner("../modeling/resnet50-128.pkl")
+    model = load_learner(
+        "fsdl_deforestation_detection/modeling/resnet50-128.pkl"
+    )
     # Speed up model inference by deactivating gradients
     model.model.eval()
     torch.no_grad()
