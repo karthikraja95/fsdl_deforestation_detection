@@ -1,7 +1,7 @@
 import streamlit as st
 import sys
 import os
-from glob import glob
+import json
 import numpy as np
 import pandas as pd
 from skimage.io import imread
@@ -27,8 +27,9 @@ from data_utils import (
 PERF_COLORS = cl.scales["8"]["div"]["RdYlGn"]
 
 # Setup Google Cloud authentication
-# TODO Change these credentials to load from Streamlit secrets
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "___.json"
+with open("google_credentials.json", "w") as fp:
+    json.dump(st.secrets["google_credentials"], fp)
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_credentials.json"
 storage_client = storage.Client()
 bq_client = bigquery.Client()
 
@@ -101,7 +102,7 @@ def load_image_names(model, chosen_set, bucket_name, labels_table):
     return img_names
 
 
-# @st.cache
+@st.cache(suppress_st_warning=True)
 def load_data(
     dataset_name,
     model_type,
