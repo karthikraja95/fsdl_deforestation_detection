@@ -1,4 +1,4 @@
-# fsdl_deforestration_detection
+# fsdl_deforestation_detection
 
 <div align="center">
 
@@ -130,38 +130,38 @@ For creating your open source community:
 ## Installation
 
 ```bash
-pip install -U fsdl_deforestration_detection
+pip install -U fsdl_deforestation_detection
 ```
 
 or install with `Poetry`
 
 ```bash
-poetry add fsdl_deforestration_detection
+poetry add fsdl_deforestation_detection
 ```
 
 Then you can run
 
 ```bash
-fsdl_deforestration_detection --help
+fsdl_deforestation_detection --help
 ```
 
 ```bash
-fsdl_deforestration_detection --name Roman
+fsdl_deforestation_detection --name Roman
 ```
 
 or if installed with `Poetry`:
 
 ```bash
-poetry run fsdl_deforestration_detection --help
+poetry run fsdl_deforestation_detection --help
 ```
 
 ```bash
-poetry run fsdl_deforestration_detection --name Roman
+poetry run fsdl_deforestation_detection --name Roman
 ```
 
 ### Makefile usage
 
-[`Makefile`](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/Makefile) contains many functions for fast assembling and convenient work.
+[`Makefile`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/Makefile) contains many functions for fast assembling and convenient work.
 
 <details>
 <summary>1. Download Poetry</summary>
