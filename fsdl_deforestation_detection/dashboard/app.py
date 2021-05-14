@@ -1,4 +1,5 @@
 import streamlit as st
+import sys
 
 sys.path.append("fsdl_deforestation_detection/dashboard/")
 from dashboard_utils import load_css
