@@ -1,0 +1,15 @@
+[
+    {
+        "mode": "REQUIRED",
+        "name": "image_id",
+        "type": "STRING"
+    },
+    {
+        "name": "has_oilpalm",
+        "type": "BOOLEAN"
+    },
+    {
+        "name": "score",
+        "type": "FLOAT"
+    }
+]

@@ -8,8 +8,9 @@ from typing import List, Tuple
 
 # NOTE This is just for the Planet Amazon dataset;
 # we need to refactor this when we use other datasets
-DATA_PATH = "/home/andreferreira/data/"
-IMG_PATH = "fixed-train-jpg/"
+DATA_PATH = "/Users/andrecnf/Documents/datasets/fsdl/"
+PLANET_PATH = "planet-understanding-the-amazon-from-space/"
+IMG_PATH = "train-jpg/"
 TIFF_PATH = "train-tif-v2/"
 LABELS_PATH = "train_v2.csv/train_v2.csv"
 TAGS = [
@@ -30,6 +31,15 @@ TAGS = [
     "selective_logging",
     "slash_burn",
     "water",
+]
+DEFORESTATION_TAGS = [
+    "agriculture",
+    "artisinal_mine",
+    "conventional_mine",
+    "cultivation",
+    "road",
+    "selective_logging",
+    "slash_burn",
 ]
 
 
@@ -87,9 +97,11 @@ def get_amazon_sample(
     """
     for row in df.itertuples():
         if load_tiff:
-            img_data = imread(f"{DATA_PATH}{TIFF_PATH}{row[1]}.tif")
+            img_data = imread(
+                f"{DATA_PATH}{PLANET_PATH}{TIFF_PATH}{row[1]}.tif"
+            )
         else:
-            img_data = imread(f"{DATA_PATH}{IMG_PATH}{row[1]}.jpg")
+            img_data = imread(f"{DATA_PATH}{PLANET_PATH}{IMG_PATH}{row[1]}.jpg")
         yield img_data, np.array(row[2:])
 
 
@@ -130,14 +142,10 @@ def add_deforestation_label(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Dataframe with the new deforestation column.
     """
-    df["deforestation"] = (
-        (df["agriculture"] == 1)
-        | (df["artisinal_mine"] == 1)
-        | (df["conventional_mine"] == 1)
-        | (df["cultivation"] == 1)
-        | (df["road"] == 1)
-        | (df["selective_logging"] == 1)
-        | (df["slash_burn"] == 1)
-    )
+    df["deforestation"] = 0
+    deforestation_idx = df.query(
+        " == 1 | ".join(DEFORESTATION_TAGS) + " == 1"
+    ).index
+    df.loc[deforestation_idx, "deforestation"] = 1
     df["deforestation"] = df["deforestation"].astype("uint8")
     return df

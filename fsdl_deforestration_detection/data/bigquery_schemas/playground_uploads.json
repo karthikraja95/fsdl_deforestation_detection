@@ -1,0 +1,112 @@
+[
+    {
+      "mode": "REQUIRED",
+      "name": "user_id",
+      "type": "INTEGER"
+    },
+    {
+      "mode": "REQUIRED",
+      "name": "ts",
+      "type": "TIMESTAMP"
+    },
+    {
+      "mode": "REQUIRED",
+      "name": "image_id",
+      "type": "INTEGER"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "user_feedback_positive",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "user_comment",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_agriculture",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_artisinal_mine",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_bare_ground",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_blooming",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_blow_down",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_clear",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_cloudy",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_conventional_mine",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_cultivation",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_habitation",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_haze",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_partly_cloudy",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_primary",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_road",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_selective_logging",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_slash_burn",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "output_water",
+      "type": "BOOLEAN"
+    }
+  ]
