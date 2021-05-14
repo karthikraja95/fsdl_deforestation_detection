@@ -283,7 +283,7 @@ def overview():
             st.plotly_chart(fig, use_container_width=True)
         if dataset_name == "Amazon":
             st.info(
-                "ℹ️ These are the validation metrics [obtained when training the model](https://colab.research.google.com/github/karthikraja95/fsdl_deforestration_detection/blob/master/fsdl_deforestration_detection/experimental/FSDL_Final_Model.ipynb)."
+                "ℹ️ These are the validation metrics [obtained when training the model](https://colab.research.google.com/github/karthikraja95/fsdl_deforestation_detection/blob/master/fsdl_deforestation_detection/experimental/FSDL_Final_Model.ipynb)."
             )
         else:
             st.info(

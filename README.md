@@ -2,15 +2,15 @@
 
 <div align="center">
 
-[![Build status](https://github.com/karthikraja95/fsdl_deforestration_detection/workflows/build/badge.svg?branch=master&event=push)](https://github.com/karthikraja95/fsdl_deforestration_detection/actions?query=workflow%3Abuild)
-[![Python Version](https://img.shields.io/pypi/pyversions/fsdl_deforestration_detection.svg)](https://pypi.org/project/fsdl_deforestration_detection/)
-[![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/karthikraja95/fsdl_deforestration_detection/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
+[![Build status](https://github.com/karthikraja95/fsdl_deforestation_detection/workflows/build/badge.svg?branch=master&event=push)](https://github.com/karthikraja95/fsdl_deforestation_detection/actions?query=workflow%3Abuild)
+[![Python Version](https://img.shields.io/pypi/pyversions/fsdl_deforestation_detection.svg)](https://pypi.org/project/fsdl_deforestation_detection/)
+[![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/karthikraja95/fsdl_deforestation_detection/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Security: bandit](https://img.shields.io/badge/security-bandit-green.svg)](https://github.com/PyCQA/bandit)
-[![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/.pre-commit-config.yaml)
-[![Semantic Versions](https://img.shields.io/badge/%F0%9F%9A%80-semantic%20versions-informational.svg)](https://github.com/karthikraja95/fsdl_deforestration_detection/releases)
-[![License](https://img.shields.io/github/license/karthikraja95/fsdl_deforestration_detection)](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/LICENSE)
+[![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.pre-commit-config.yaml)
+[![Semantic Versions](https://img.shields.io/badge/%F0%9F%9A%80-semantic%20versions-informational.svg)](https://github.com/karthikraja95/fsdl_deforestation_detection/releases)
+[![License](https://img.shields.io/github/license/karthikraja95/fsdl_deforestation_detection)](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/LICENSE)
 
 Predicting Deforestation from Satellite Images. An End-to-End Deep Learning Project. 
 
@@ -44,7 +44,7 @@ make install
 git add .
 git commit -m ":tada: Initial commit"
 git branch -M main
-git remote add origin https://github.com/karthikraja95/fsdl_deforestration_detection.git
+git remote add origin https://github.com/karthikraja95/fsdl_deforestation_detection.git
 git push -u origin main
 ```
 
@@ -102,29 +102,29 @@ Articles:
 For your development we've prepared:
 
 - Supports for `Python 3.7` and higher.
-- [`Poetry`](https://python-poetry.org/) as the dependencies manager. See configuration in [`pyproject.toml`](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/pyproject.toml) and [`setup.cfg`](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/setup.cfg).
+- [`Poetry`](https://python-poetry.org/) as the dependencies manager. See configuration in [`pyproject.toml`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/pyproject.toml) and [`setup.cfg`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/setup.cfg).
 - Power of [`black`](https://github.com/psf/black), [`isort`](https://github.com/timothycrosley/isort) and [`pyupgrade`](https://github.com/asottile/pyupgrade) formatters.
 - Ready-to-use [`pre-commit`](https://pre-commit.com/) hooks with formatters above.
 - Type checks with the configured [`mypy`](https://mypy.readthedocs.io).
 - Testing with [`pytest`](https://docs.pytest.org/en/latest/).
 - Docstring checks with [`darglint`](https://github.com/terrencepreilly/darglint).
 - Security checks with [`safety`](https://github.com/pyupio/safety) and [`bandit`](https://github.com/PyCQA/bandit).
-- Well-made [`.editorconfig`](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/.editorconfig), [`.dockerignore`](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/.dockerignore), and [`.gitignore`](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/.gitignore). You don't have to worry about those things.
+- Well-made [`.editorconfig`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.editorconfig), [`.dockerignore`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.dockerignore), and [`.gitignore`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.gitignore). You don't have to worry about those things.
 
 For building and deployment:
 
 - `GitHub` integration.
-- [`Makefile`](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/Makefile#L89) for building routines. Everything is already set up for security checks, codestyle checks, code formatting, testing, linting, docker builds, etc. More details at [Makefile summary](#makefile-usage)).
-- [Dockerfile](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/docker/Dockerfile) for your package.
-- `Github Actions` with predefined [build workflow](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/.github/workflows/build.yml) as the default CI/CD.
+- [`Makefile`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/Makefile#L89) for building routines. Everything is already set up for security checks, codestyle checks, code formatting, testing, linting, docker builds, etc. More details at [Makefile summary](#makefile-usage)).
+- [Dockerfile](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/docker/Dockerfile) for your package.
+- `Github Actions` with predefined [build workflow](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.github/workflows/build.yml) as the default CI/CD.
 - Always up-to-date dependencies with [`@dependabot`](https://dependabot.com/) (You will only [enable it](https://docs.github.com/en/github/administering-a-repository/enabling-and-disabling-version-updates#enabling-github-dependabot-version-updates)).
-- Automatic drafts of new releases with [`Release Drafter`](https://github.com/marketplace/actions/release-drafter). It creates a list of changes based on labels in merged `Pull Requests`. You can see labels (aka `categories`) in [`release-drafter.yml`](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/.github/release-drafter.yml). Works perfectly with [Semantic Versions](https://semver.org/) specification.
+- Automatic drafts of new releases with [`Release Drafter`](https://github.com/marketplace/actions/release-drafter). It creates a list of changes based on labels in merged `Pull Requests`. You can see labels (aka `categories`) in [`release-drafter.yml`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.github/release-drafter.yml). Works perfectly with [Semantic Versions](https://semver.org/) specification.
 
 For creating your open source community:
 
-- Ready-to-use [Pull Requests templates](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/.github/PULL_REQUEST_TEMPLATE.md) and several [Issue templates](https://github.com/karthikraja95/fsdl_deforestration_detection/tree/master/.github/ISSUE_TEMPLATE).
+- Ready-to-use [Pull Requests templates](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.github/PULL_REQUEST_TEMPLATE.md) and several [Issue templates](https://github.com/karthikraja95/fsdl_deforestation_detection/tree/master/.github/ISSUE_TEMPLATE).
 - Files such as: `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md` are generated automatically.
-- [`Stale bot`](https://github.com/apps/stale) that closes abandoned issues after a period of inactivity. (You will only [need to setup free plan](https://github.com/marketplace/stale)). Configuration is [here](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/.github/.stale.yml).
+- [`Stale bot`](https://github.com/apps/stale) that closes abandoned issues after a period of inactivity. (You will only [need to setup free plan](https://github.com/marketplace/stale)). Configuration is [here](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.github/.stale.yml).
 - [Semantic Versions](https://semver.org/) specification with [`Release Drafter`](https://github.com/marketplace/actions/release-drafter).
 
 ## Installation
@@ -300,7 +300,7 @@ which is equivalent to:
 make docker VERSION=latest
 ```
 
-More information [here](https://github.com/karthikraja95/fsdl_deforestration_detection/tree/master/docker).
+More information [here](https://github.com/karthikraja95/fsdl_deforestation_detection/tree/master/docker).
 
 </p>
 </details>
@@ -319,14 +319,14 @@ or to remove all build
 make clean
 ```
 
-More information [here](https://github.com/karthikraja95/fsdl_deforestration_detection/tree/master/docker).
+More information [here](https://github.com/karthikraja95/fsdl_deforestation_detection/tree/master/docker).
 
 </p>
 </details>
 
 ## 📈 Releases
 
-You can see the list of available releases on the [GitHub Releases](https://github.com/karthikraja95/fsdl_deforestration_detection/releases) page.
+You can see the list of available releases on the [GitHub Releases](https://github.com/karthikraja95/fsdl_deforestation_detection/releases) page.
 
 We follow [Semantic Versions](https://semver.org/) specification.
 
@@ -343,26 +343,26 @@ For Pull Request this labels are configured, by default:
 |            `documentation`            |    📝 Documentation     |
 |            `dependencies`             | ⬆️ Dependencies updates |
 
-You can update it in [`release-drafter.yml`](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/.github/release-drafter.yml).
+You can update it in [`release-drafter.yml`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.github/release-drafter.yml).
 
 GitHub creates the `bug`, `enhancement`, and `documentation` labels for you. Dependabot creates the `dependencies` label. Create the remaining labels on the Issues tab of your GitHub repository, when you need them.
 
 ## 🛡 License
 
-[![License](https://img.shields.io/github/license/karthikraja95/fsdl_deforestration_detection)](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/karthikraja95/fsdl_deforestation_detection)](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/LICENSE)
 
-This project is licensed under the terms of the `MIT` license. See [LICENSE](https://github.com/karthikraja95/fsdl_deforestration_detection/blob/master/LICENSE) for more details.
+This project is licensed under the terms of the `MIT` license. See [LICENSE](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/LICENSE) for more details.
 
 ## 📃 Citation
 
 ```
 @misc{fsdl_deforestation_detection,
   author = {Karthik Bhaskar, Andre Ferreira},
-  title = {Predicting Deforestration from Satellite Images},
+  title = {Predicting deforestation from Satellite Images},
   year = {2021},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/karthikraja95/fsdl_deforestration_detection}}
+  howpublished = {\url{https://github.com/karthikraja95/fsdl_deforestation_detection}}
 }
 ```
 

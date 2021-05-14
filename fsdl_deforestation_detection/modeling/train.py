@@ -14,10 +14,10 @@ import wandb
 from wandb.keras import WandbCallback
 
 sys.path.append(
-    "fsdl_deforestration_detection/fsdl_deforestration_detection/data/"
+    "fsdl_deforestation_detection/fsdl_deforestation_detection/data/"
 )
 sys.path.append(
-    "fsdl_deforestration_detection/fsdl_deforestration_detection/modeling/"
+    "fsdl_deforestation_detection/fsdl_deforestation_detection/modeling/"
 )
 import data_utils
 import model_utils

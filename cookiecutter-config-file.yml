@@ -1,9 +1,9 @@
 # This file contains values from Cookiecutter
 
 default_context:
-  project_name: "fsdl_deforestration_detection"
-  project_description: "Predicting Deforestration from Satellite Images. Final Project for Full Stack Deep Learning. Authors Karthik Bhaskar and Andre Ferreira"
-  organization: "fsdl_deforestration_detection"
+  project_name: "fsdl_deforestation_detection"
+  project_description: "Predicting deforestation from Satellite Images. Final Project for Full Stack Deep Learning. Authors Karthik Bhaskar and Andre Ferreira"
+  organization: "fsdl_deforestation_detection"
   license: "MIT"
   version: "0.1.0"
   github_name: "karthikraja95"

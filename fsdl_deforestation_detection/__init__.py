@@ -1,5 +1,5 @@
 # type: ignore[attr-defined]
-"""Predicting Deforestration from Satellite Images. Final Project for Full Stack Deep Learning. Authors Karthik Bhaskar and Andre Ferreira"""
+"""Predicting deforestation from Satellite Images. Final Project for Full Stack Deep Learning. Authors Karthik Bhaskar and Andre Ferreira"""
 
 try:
     from importlib.metadata import version, PackageNotFoundError

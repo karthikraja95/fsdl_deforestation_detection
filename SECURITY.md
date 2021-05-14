@@ -7,7 +7,7 @@
 
 Vulnerabilities can be reported by emailing core members:
 
-- fsdl_deforestration_detection [karthikrajabk@gmail.com](mailto:karthikrajabk@gmail.com)
+- fsdl_deforestation_detection [karthikrajabk@gmail.com](mailto:karthikrajabk@gmail.com)
 
 Please include the requested information listed below (as much as you can provide) to help us better understand the nature and scope of the possible issue:
 

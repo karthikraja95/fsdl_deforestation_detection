@@ -1,4 +1,4 @@
-# Docker for fsdl_deforestration_detection
+# Docker for fsdl_deforestation_detection
 
 ## Installation
 
@@ -15,7 +15,7 @@ make docker VERSION=latest
 ```
 
 You could also provide name and version for the image itself.
-Default name is `IMAGE := fsdl_deforestration_detection`.
+Default name is `IMAGE := fsdl_deforestation_detection`.
 Default version is `VERSION := latest`.
 
 ```bash
@@ -27,7 +27,7 @@ make docker IMAGE=some_name VERSION=0.1.0
 ```bash
 docker run -it --rm \
    -v $(pwd):/workspace \
-   fsdl_deforestration_detection bash
+   fsdl_deforestation_detection bash
 ```
 
 ## How to clean up

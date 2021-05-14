@@ -1,6 +1,6 @@
 import pytest
 
-from fsdl_deforestration_detection.example import hello
+from fsdl_deforestation_detection.example import hello
 
 
 @pytest.mark.parametrize(
