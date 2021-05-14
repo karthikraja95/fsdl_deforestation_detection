@@ -114,7 +114,10 @@ def get(**kwargs):
 # Setup a session state, to preserve some info through reruns
 session_state = get(
     user_id=None,
+    ts=None,
     image_name=None,
+    image_id=None,
     user_feedback_positive=False,
     user_feedback_negative=False,
+    user_data_uploaded=False,
 )

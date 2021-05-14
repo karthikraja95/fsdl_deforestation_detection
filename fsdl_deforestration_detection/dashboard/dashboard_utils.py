@@ -1,15 +1,19 @@
 import streamlit as st
 import sys
+import os
 from glob import glob
 import numpy as np
 import pandas as pd
 from skimage.io import imread
+from PIL import Image
 from fastai.vision.all import Learner, Normalize, imagenet_stats
 from fastai.metrics import accuracy_multi, FBetaMulti, FBeta
 import torch
 import plotly.express as px
 import plotly.graph_objects as go
 import colorlover as cl
+from google.cloud import storage, bigquery
+import io
 
 sys.path.append("../data/")
 from data_utils import (
@@ -21,6 +25,12 @@ from data_utils import (
 )
 
 PERF_COLORS = cl.scales["8"]["div"]["RdYlGn"]
+
+# Setup Google Cloud authentication
+# TODO Change these credentials to load from Streamlit secrets
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "___.json"
+storage_client = storage.Client()
+bq_client = bigquery.Client()
 
 
 def load_css(file_name):
@@ -37,68 +47,96 @@ def hash_fastai_model(model):
 
 def set_paths(dataset_name, model_type):
     if dataset_name == "Amazon":
-        img_path = "planet/planet/train-jpg/"
-        labels_path = "planet/planet/train_classes.csv"
+        bucket_name = "planet_amazon"
+        img_path = "train-jpg/"
+        labels_table = "planet_labels"
         img_name_col = "image_name"
         if model_type == "Deforestation":
             label_col = "deforestation"
         else:
             label_col = TAGS
     else:
-        img_path = "widsdatathon2019/leaderboard_holdout_data/"
-        labels_path = "widsdatathon2019/holdout.csv"
+        bucket_name = "wids_oil_palm"
+        img_path = "leaderboard_holdout_data/"
+        labels_table = "wids_oil_palm_labels"
         img_name_col = "image_id"
         label_col = "has_oilpalm"
-    return img_path, labels_path, img_name_col, label_col
+    return bucket_name, img_path, labels_table, img_name_col, label_col
 
 
-def load_image_names(model, chosen_set, img_path, labels_path):
+def load_image(bucket_name, img_path, image_name):
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.get_blob(f"{img_path}{image_name}.jpg")
+    blob = blob.download_as_bytes()
+    blob = io.BytesIO(blob)
+    image = imread(blob)
+    return image
+
+
+def load_labels_df(labels_table):
+    labels_df = pd.read_gbq(
+        f"SELECT * FROM `fsdl-305310.deforestation_data.{labels_table}`"
+    )
+    return labels_df
+
+
+def load_image_names(model, chosen_set, bucket_name, labels_table):
     if chosen_set is None:
-        img_names = sorted(glob(f"{DATA_PATH}{img_path}*.jpg"))
-        img_names = [
-            file_path.split("/")[-1].split(".")[0] for file_path in img_names
-        ]
+        img_names = storage_client.list_blobs(bucket_name)
+        img_names = sorted(
+            [
+                f.name.split("/")[-1].split(".")[0]
+                for f in img_names
+                if ".jpg" in f.name
+            ]
+        )
     else:
         if chosen_set == "Train":
             split_idx = model.dls.splits[0]
         else:
             split_idx = model.dls.splits[1]
         # Load the original dataframe and extract the image names from there
-        labels_df = pd.read_csv(f"{DATA_PATH}{labels_path}")
-        img_names = list(labels_df.iloc[split_idx, 0])
+        labels_df = load_labels_df(labels_table)
+        img_names = sorted(list(labels_df.iloc[split_idx, 0]))
     return img_names
 
 
-@st.cache
+# @st.cache
 def load_data(
     dataset_name,
     model_type,
+    bucket_name,
     img_path,
     img_names,
-    labels_path,
+    labels_table,
     img_name_col,
     n_samples=100,
 ):
     # Load and preprocess the images
     imgs = np.empty(shape=(0, 0, 0, 0))
-    count = 0
-    for i in range(n_samples):
-        img = imread(f"{DATA_PATH}{img_path}{img_names[i]}.jpg")
-        img = np.expand_dims(img, axis=0)
-        if count == 0:
-            imgs = img
-        else:
-            imgs = np.concatenate((imgs, img))
-        count += 1
+    count, i = 0, 0
+    while count < n_samples:
+        try:
+            img = load_image(bucket_name, img_path, img_names[i])
+            img = np.expand_dims(img, axis=0)
+            if count == 0:
+                imgs = img
+            else:
+                imgs = np.concatenate((imgs, img))
+            count += 1
+        except AttributeError:
+            st.warning(
+                f"Couldn't load image {img_names[count]} from {bucket_name}/{img_path}. Make sure that it was properly uploaded."
+            )
+        i += 1
     imgs = Normalize.from_stats(*imagenet_stats)(imgs)
     imgs = torch.from_numpy(imgs)
     # imgs = imgs.permute((0, 3, 1, 2))  # These 2 lines are only needed if running inference
     # imgs = imgs.float()                # directly through the PyTorch model
     # Load and preprocess the labels
-    labels_df = pd.read_csv(f"{DATA_PATH}{labels_path}")
+    labels_df = load_labels_df(labels_table)
     labels_df.sort_values(img_name_col, inplace=True)
     if dataset_name == "Amazon":
-        labels_df = encode_tags(labels_df, drop_tags_col=True)
         if model_type == "Deforestation":
             labels_df = add_deforestation_label(labels_df)
             labels = labels_df.iloc[:n_samples, -1].values
@@ -110,7 +148,7 @@ def load_data(
     return imgs, labels
 
 
-@st.cache(hash_funcs={Learner: hash_fastai_model})
+@st.cache(hash_funcs={Learner: hash_fastai_model}, suppress_st_warning=True)
 def run_model(model, img):
     output = model.predict(img[:, :, :3])
     return output
@@ -170,16 +208,13 @@ def show_model_output(model_type, output, n_labels_per_row=4):
 def show_labels(
     dataset_name,
     sample_name,
-    labels_path,
+    labels_table,
     img_name_col,
     label_col,
     n_labels_per_row=4,
 ):
     # Load the labels
-    labels_df = pd.read_csv(f"{DATA_PATH}{labels_path}")
-    if dataset_name == "Amazon":
-        # TODO Remove this once we're loading from BigQuery
-        labels_df = encode_tags(labels_df, drop_tags_col=True)
+    labels_df = load_labels_df(labels_table)
     labels_df[img_name_col] = labels_df[img_name_col].str.replace(".jpg", "")
     labels = labels_df.loc[
         labels_df[img_name_col] == sample_name, label_col
@@ -249,7 +284,7 @@ def get_number_plot(value, title):
     fig = go.Figure(
         go.Indicator(mode="number", value=value, title=dict(text=title))
     )
-    fig.update_layout(margin=dict(l=0, r=0, b=0, t=0, pad=0), height=150)
+    fig.update_layout(margin=dict(l=0, r=0, b=0, t=0, pad=0), height=160)
     return fig
 
 
@@ -298,3 +333,118 @@ def get_pixel_dist_plot(imgs):
         yaxis_title="count", margin=dict(l=0, r=0, b=0, t=50, pad=0), height=300
     )
     return fig
+
+
+def gen_user_id():
+    # Load the latest user ID
+    user_data_df = pd.read_gbq(
+        "SELECT * FROM `fsdl-305310.user_data.playground_uploads`"
+    )
+    if len(user_data_df) == 0:
+        last_id = 0
+    else:
+        last_id = user_data_df.user_id.max()
+    # Get a new, unique user ID
+    user_id = last_id + 1
+    return user_id
+
+
+def gen_image_id():
+    # Load the latest image ID
+    user_data_df = pd.read_gbq(
+        "SELECT * FROM `fsdl-305310.user_data.playground_uploads`"
+    )
+    if len(user_data_df) == 0:
+        last_id = 0
+    else:
+        last_id = user_data_df.image_id.max()
+    # Get a new, unique image ID
+    image_id = last_id + 1
+    return image_id
+
+
+def upload_user_data(
+    user_id, ts, image_id, image, output, user_feedback_positive
+):
+    # Upload the user's input image
+    bucket = storage_client.bucket("playground_images")
+    blob = bucket.blob(f"{image_id}.jpg")
+    f = io.BytesIO()
+    pil_img = Image.fromarray(image)
+    pil_img.save(f, "jpeg")
+    pil_img.close()
+    blob.upload_from_string(f.getvalue(), content_type="image/jpeg")
+    # Upload a row with the feedback
+    user_data = dict(
+        user_id=user_id,
+        ts=ts,
+        image_id=image_id,
+        user_feedback_positive=user_feedback_positive,
+        user_comment="",
+        output_agriculture=output[0],
+        output_artisinal_mine=output[1],
+        output_bare_ground=output[2],
+        output_blooming=output[3],
+        output_blow_down=output[4],
+        output_clear=output[5],
+        output_cloudy=output[6],
+        output_conventional_mine=output[7],
+        output_cultivation=output[8],
+        output_habitation=output[9],
+        output_haze=output[10],
+        output_partly_cloudy=output[11],
+        output_primary=output[12],
+        output_road=output[13],
+        output_selective_logging=output[14],
+        output_slash_burn=output[15],
+        output_water=output[16],
+    )
+    user_df = pd.Series(user_data).to_frame().transpose()
+    user_df.user_id = user_df.user_id.astype(int)
+    user_df.image_id = user_df.image_id.astype(int)
+    user_df.user_feedback_positive = user_df.user_feedback_positive.astype(bool)
+    user_df.user_comment = user_df.user_comment.astype(str)
+    user_df.output_agriculture = user_df.output_agriculture.astype(bool)
+    user_df.output_artisinal_mine = user_df.output_artisinal_mine.astype(bool)
+    user_df.output_bare_ground = user_df.output_bare_ground.astype(bool)
+    user_df.output_blooming = user_df.output_blooming.astype(bool)
+    user_df.output_blow_down = user_df.output_blow_down.astype(bool)
+    user_df.output_clear = user_df.output_clear.astype(bool)
+    user_df.output_cloudy = user_df.output_cloudy.astype(bool)
+    user_df.output_conventional_mine = user_df.output_conventional_mine.astype(
+        bool
+    )
+    user_df.output_cultivation = user_df.output_cultivation.astype(bool)
+    user_df.output_habitation = user_df.output_habitation.astype(bool)
+    user_df.output_haze = user_df.output_haze.astype(bool)
+    user_df.output_partly_cloudy = user_df.output_partly_cloudy.astype(bool)
+    user_df.output_primary = user_df.output_primary.astype(bool)
+    user_df.output_road = user_df.output_road.astype(bool)
+    user_df.output_selective_logging = user_df.output_selective_logging.astype(
+        bool
+    )
+    user_df.output_slash_burn = user_df.output_slash_burn.astype(bool)
+    user_df.output_water = user_df.output_water.astype(bool)
+    user_df.to_gbq("user_data.playground_uploads", if_exists="append")
+
+
+def upload_user_comment(user_id, image_id, user_comment):
+    dml_statement = (
+        "UPDATE user_data.playground_uploads "
+        f"SET user_comment = '{user_comment}' "
+        f"WHERE (user_id = {user_id} AND image_id = {image_id})"
+    )
+    query_job = bq_client.query(dml_statement)
+
+
+def delete_user_data(user_id, image_id):
+    # Delete the image
+    bucket = storage_client.bucket("playground_images")
+    blob = bucket.blob(f"{image_id}.jpg")
+    blob.delete()
+    # Delete the row from BigQuery
+    dml_statement = (
+        "DELETE user_data.playground_uploads "
+        f"WHERE (user_id = {user_id} AND image_id = {image_id})"
+    )
+    query_job = bq_client.query(dml_statement)

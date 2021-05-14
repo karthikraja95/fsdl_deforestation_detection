@@ -2497,7 +2497,7 @@ pbr = ">=2.0.0,<2.1.0 || >2.1.0"
 
 [[package]]
 name = "streamlit"
-version = "0.81.1"
+version = "0.82.0"
 description = "The fastest way to build data apps in Python"
 category = "main"
 optional = false
@@ -2509,7 +2509,7 @@ astor = "*"
 base58 = "*"
 blinker = "*"
 cachetools = ">=4.0"
-click = ">=7.0"
+click = ">=7.0,<8.0"
 gitpython = "*"
 numpy = "*"
 packaging = "*"
@@ -3136,7 +3136,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "755a9496373e61c3b61a09ac94bcdde8f1ceb39a13c223be1ec269345aae6d63"
+content-hash = "0f3f513086f4c7e184bf2ca283567788c2a887ad4eeb06c0b7605f8d940b1cb4"
 
 [metadata.files]
 absl-py = [
@@ -4799,8 +4799,8 @@ stevedore = [
     {file = "stevedore-3.3.0.tar.gz", hash = "sha256:3a5bbd0652bf552748871eaa73a4a8dc2899786bc497a2aa1fcb4dcdb0debeee"},
 ]
 streamlit = [
-    {file = "streamlit-0.81.1-py2.py3-none-any.whl", hash = "sha256:250bfe530729ceea642dd0f7380225eb413d339739e6c25342d2c46c24154819"},
-    {file = "streamlit-0.81.1.tar.gz", hash = "sha256:ab219980abe8da8f799eb92514c805ec7521c1a603f411af090cc44cd0fdc944"},
+    {file = "streamlit-0.82.0-py2.py3-none-any.whl", hash = "sha256:350b49b8a0677fb781ece048b225d39b298dd0375cd298d3520f48583178959a"},
+    {file = "streamlit-0.82.0.tar.gz", hash = "sha256:362539ea398d9528742a47e92216e076cc594e012998504aaec2ee00249ac331"},
 ]
 subprocess32 = [
     {file = "subprocess32-3.5.4-cp27-cp27m-macosx_10_6_intel.whl", hash = "sha256:88e37c1aac5388df41cc8a8456bb49ebffd321a3ad4d70358e3518176de3a56b"},

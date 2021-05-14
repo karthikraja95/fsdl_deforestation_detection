@@ -5,11 +5,13 @@ from fastai.vision.all import load_learner
 import torch
 from skimage.io import imread
 import plotly.express as px
+from datetime import datetime
 
 sys.path.append("../data/")
 from data_utils import DATA_PATH
 from dashboard_utils import (
     set_paths,
+    load_image,
     load_image_names,
     load_data,
     run_model,
@@ -20,8 +22,16 @@ from dashboard_utils import (
     get_number_plot,
     get_hist_plot,
     get_pixel_dist_plot,
+    gen_user_id,
+    gen_image_id,
+    upload_user_data,
+    upload_user_comment,
+    delete_user_data,
 )
 from session_state import session_state
+
+# Get a user ID
+session_state.user_id = gen_user_id()
 
 
 def playground():
@@ -46,6 +56,9 @@ def playground():
         "But remember that this should only work for satellite imagery, "
         "ideally around 256x256 size.",
     )
+    st.sidebar.markdown(
+        "Made by [André Ferreira](https://andrecnf.com/) and [Karthik Bhaskar](https://www.kbhaskar.com/)."
+    )
     # Set the model
     model = load_learner("../modeling/resnet50-128.pkl")
     # Speed up model inference by deactivating gradients
@@ -58,6 +71,9 @@ def playground():
             # Check if it's a different image than the one before
             if input_file.name != session_state.image_name:
                 session_state.image_name = input_file.name
+                session_state.image_id = gen_image_id()
+                session_state.ts = datetime.now()
+                session_state.user_data_uploaded = False
                 # Reset buttons
                 session_state.user_feedback_positive = False
                 session_state.user_feedback_negative = False
@@ -68,6 +84,11 @@ def playground():
         output = run_model(model, img)
         st.subheader("Model output:")
         show_model_output(model_type, output)
+        st.info(
+            "ℹ️ Green labels represent categories that we don't associate with deforestation "
+            "risk (e.g. natural occurences or old structures), while red labels can serve as "
+            "a potential deforestation signal (e.g. new constructions, empty patches in forests)."
+        )
         # User feedback / data flywheel
         st.write("Did the model output match what you expected?")
         feedback_cols = st.beta_columns(2)
@@ -84,7 +105,16 @@ def playground():
                 "ℹ️ Thank you for your feedback! This can help us "
                 "improve our models 🙌"
             )
-            # TODO Upload the data to our database
+            if session_state.user_data_uploaded is False:
+                upload_user_data(
+                    session_state.user_id,
+                    session_state.ts,
+                    session_state.image_id,
+                    img,
+                    output[1],
+                    session_state.user_feedback_positive,
+                )
+                session_state.user_data_uploaded = True
             if st.button("Delete my image and feedback data"):
                 st.info(
                     "ℹ️ Alright, we deleted it. Just know that we had "
@@ -104,13 +134,27 @@ def playground():
                 "what makes you think the model failed. Mind "
                 "leaving a comment bellow?"
             )
-            # TODO Upload the data to our database
+            if session_state.user_data_uploaded is False:
+                upload_user_data(
+                    session_state.user_id,
+                    session_state.ts,
+                    session_state.image_id,
+                    img,
+                    output[1],
+                    session_state.user_feedback_positive,
+                )
+                session_state.user_data_uploaded = True
             user_comment = st.empty()
             user_comment_txt = user_comment.text_input(
                 label="Leave a comment on why the model failed.",
                 max_chars=280,
             )
-            # TODO Update the data with the user comment
+            if len(user_comment_txt) > 0:
+                upload_user_comment(
+                    session_state.user_id,
+                    session_state.image_id,
+                    user_comment_txt,
+                )
             if st.button("Delete my image and feedback data"):
                 st.info(
                     "ℹ️ Alright, we deleted it. Just know that we had "
@@ -118,11 +162,7 @@ def playground():
                     "deforestation detection models. We thought we "
                     "were friends 🙁"
                 )
-        st.info(
-            "ℹ️ Green labels represent categories that we don't associate with deforestation "
-            "risk (e.g. natural occurences or old structures), while red labels can serve as "
-            "a potential deforestation signal (e.g. new constructions, empty patches in forests)."
-        )
+                delete_user_data(session_state.user_id, session_state.image_id)
         # Model interpretation
         with st.beta_expander("Peek inside the black box"):
             explain_cols = st.beta_columns(2)
@@ -163,9 +203,13 @@ def overview():
             "which is the one in which our models were trained on. As such, you can look at performance "
             "on either the train or validation set."
         )
-        img_path, labels_path, img_name_col, label_col = set_paths(
-            dataset_name, model_type
-        )
+        (
+            bucket_name,
+            img_path,
+            labels_table,
+            img_name_col,
+            label_col,
+        ) = set_paths(dataset_name, model_type)
     else:
         init_info.info(
             "ℹ️ You've selected the "
@@ -174,18 +218,25 @@ def overview():
             "While it should be somewhat similar to the Amazon dataset, it can be interesting "
             "to compare results on potentially out-of-domain data."
         )
-        img_path, labels_path, img_name_col, label_col = set_paths(
-            dataset_name, model_type
-        )
+        (
+            bucket_name,
+            img_path,
+            labels_table,
+            img_name_col,
+            label_col,
+        ) = set_paths(dataset_name, model_type)
     # Set the model
     model = load_learner("../modeling/resnet50-128.pkl")
     # Speed up model inference by deactivating gradients
     model.model.eval()
     torch.no_grad()
-    img_names = load_image_names(model, chosen_set, img_path, labels_path)
+    img_names = load_image_names(model, chosen_set, bucket_name, labels_table)
     sample_name = st.sidebar.selectbox(
         "Sample",
         img_names,
+    )
+    st.sidebar.markdown(
+        "Made by [André Ferreira](https://andrecnf.com/) and [Karthik Bhaskar](https://www.kbhaskar.com/)."
     )
     # Load all the data (or some samples) from the selected database
     n_samples = 500
@@ -193,9 +244,10 @@ def overview():
         load_data(
             dataset_name,
             model_type,
+            bucket_name,
             img_path,
             img_names,
-            labels_path,
+            labels_table,
             img_name_col,
             n_samples=n_samples,
         )
@@ -267,7 +319,6 @@ def overview():
         f"ℹ️ Using only a subset of {n_samples} samples, so as to make this plot practically fast."
     )
     # Show imagery analysis
-    # TODO Cache the imagery plots
     st.header("Imagery analysis")
     st.subheader("Image size")
     img_size_cols = st.beta_columns(3)
@@ -285,14 +336,11 @@ def overview():
     st.info(
         f"ℹ️ Using only a subset of {n_samples} samples, so as to make this plot practically fast."
     )
-    # TODO Show sample analysis
-    # TODO Cache the model inference results
+    # Show sample analysis
     st.header("Sample analysis")
     # Load and display the uploaded image
     with st.spinner("Loading image..."):
-        # TODO Adjust the sample loading to the appropriate path according to the chosen dataset and set
-        # TODO Load image from Google Cloud Storage bucket
-        img = imread(f"{DATA_PATH}{img_path}{sample_name}.jpg")
+        img = load_image(bucket_name, img_path, sample_name)
         fig = px.imshow(img)
         st.plotly_chart(fig)
     # Run the model on the image
@@ -300,7 +348,9 @@ def overview():
     st.subheader("Model output:")
     show_model_output(model_type, output)
     st.subheader("Real labels:")
-    show_labels(dataset_name, sample_name, labels_path, img_name_col, label_col)
+    show_labels(
+        dataset_name, sample_name, labels_table, img_name_col, label_col
+    )
     st.info(
         "ℹ️ Green labels represent categories that we don't associate with deforestation "
         "risk (e.g. natural occurences or old structures), while red labels can serve as "
