@@ -65,7 +65,6 @@ def set_paths(dataset_name, model_type):
     return bucket_name, img_path, labels_table, img_name_col, label_col
 
 
-@st.cache
 def load_image(bucket_name, img_path, image_name):
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.get_blob(f"{img_path}{image_name}.jpg")

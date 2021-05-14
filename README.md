@@ -2,10 +2,9 @@
 
 <div align="center">
 
-[![Build status](https://github.com/karthikraja95/fsdl_deforestation_detection/workflows/build/badge.svg?branch=master&event=push)](https://github.com/karthikraja95/fsdl_deforestation_detection/actions?query=workflow%3Abuild)
-[![Python Version](https://img.shields.io/pypi/pyversions/fsdl_deforestation_detection.svg)](https://pypi.org/project/fsdl_deforestation_detection/)
-[![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/karthikraja95/fsdl_deforestation_detection/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/andrecnf/fsdl_deforestation_detection/fsdl_deforestation_detection/dashboard/streamlit_app.py)
 
+[![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/karthikraja95/fsdl_deforestation_detection/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Security: bandit](https://img.shields.io/badge/security-bandit-green.svg)](https://github.com/PyCQA/bandit)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.pre-commit-config.yaml)
@@ -15,6 +14,22 @@
 Predicting Deforestation from Satellite Images. An End-to-End Deep Learning Project. 
 
 </div>
+
+## Description
+
+A deep learning approach to detecting deforestation risk, using satellite images and a deep learning model. We relied on [Planet](https://www.planet.com/) imagery from two [Kaggle](https://www.kaggle.com/) datasets (one from the [Amazon rainforest](https://www.kaggle.com/c/planet-understanding-the-amazon-from-space) and another on [oil palm plantations in Borneo](https://www.kaggle.com/c/widsdatathon2019)) and trained a [ResNet](https://paperswithcode.com/method/resnet) model using [FastAI](https://docs.fast.ai/). For more details, check the following links:
+
+* [Streamlit dashboard for testing the model and exploring the data](https://share.streamlit.io/andrecnf/fsdl_deforestation_detection/fsdl_deforestation_detection/dashboard/streamlit_app.py)
+
+* [Project management workspace in Notion](https://www.notion.so/Homepage-2ff744c443814f459d80a6e5819226a5)
+
+* [Loom video about the project]()
+
+* [Medium article about this project]()
+
+* [Slides of the project]()
+
+This is the result of a group project, made by [André Ferreira](https://andrecnf.com/) and [Karthik Bhaskar](https://www.kbhaskar.com/), for the [Full Stack Deep Learning - Spring 2021 online course](http://fullstackdeeplearning.com/spring2021/).
 
 ## Very first steps
 
@@ -70,94 +85,6 @@ Poetry's [commands](https://python-poetry.org/docs/cli/#commands) are very intui
 
 </p>
 </details>
-
-### Building your package
-
-Building a new version of the application contains steps:
-
-- Bump the version of your package `poetry version <version>`. You can pass the new version explicitly, or a rule such as `major`, `minor`, or `patch`. For more details, refer to the [Semantic Versions](https://semver.org/) standard.
-- Make a commit to `GitHub`.
-- Create a `GitHub release`.
-- And... publish 🙂 `poetry publish --build`
-
-## What's next
-
-Well, that's up to you. I can only recommend the packages and articles that helped me.
-
-Packages:
-
-- [`Typer`](https://github.com/tiangolo/typer) is great for creating CLI applications.
-- [`Rich`](https://github.com/willmcgugan/rich) makes it easy to add beautiful formatting in the terminal.
-- [`FastAPI`](https://github.com/tiangolo/fastapi) is a type-driven asynchronous web framework.
-- [`IceCream`](https://github.com/gruns/icecream) is a little library for sweet and creamy debugging
-
-Articles:
-
-- [Open Source Guides](https://opensource.guide/)
-- [GitHub Actions Documentation](https://help.github.com/en/actions)
-- Maybe you would like to add [gitmoji](https://gitmoji.carloscuesta.me/) to commit names. This is really funny. 😄
-
-## 🚀 Features
-
-For your development we've prepared:
-
-- Supports for `Python 3.7` and higher.
-- [`Poetry`](https://python-poetry.org/) as the dependencies manager. See configuration in [`pyproject.toml`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/pyproject.toml) and [`setup.cfg`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/setup.cfg).
-- Power of [`black`](https://github.com/psf/black), [`isort`](https://github.com/timothycrosley/isort) and [`pyupgrade`](https://github.com/asottile/pyupgrade) formatters.
-- Ready-to-use [`pre-commit`](https://pre-commit.com/) hooks with formatters above.
-- Type checks with the configured [`mypy`](https://mypy.readthedocs.io).
-- Testing with [`pytest`](https://docs.pytest.org/en/latest/).
-- Docstring checks with [`darglint`](https://github.com/terrencepreilly/darglint).
-- Security checks with [`safety`](https://github.com/pyupio/safety) and [`bandit`](https://github.com/PyCQA/bandit).
-- Well-made [`.editorconfig`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.editorconfig), [`.dockerignore`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.dockerignore), and [`.gitignore`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.gitignore). You don't have to worry about those things.
-
-For building and deployment:
-
-- `GitHub` integration.
-- [`Makefile`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/Makefile#L89) for building routines. Everything is already set up for security checks, codestyle checks, code formatting, testing, linting, docker builds, etc. More details at [Makefile summary](#makefile-usage)).
-- [Dockerfile](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/docker/Dockerfile) for your package.
-- `Github Actions` with predefined [build workflow](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.github/workflows/build.yml) as the default CI/CD.
-- Always up-to-date dependencies with [`@dependabot`](https://dependabot.com/) (You will only [enable it](https://docs.github.com/en/github/administering-a-repository/enabling-and-disabling-version-updates#enabling-github-dependabot-version-updates)).
-- Automatic drafts of new releases with [`Release Drafter`](https://github.com/marketplace/actions/release-drafter). It creates a list of changes based on labels in merged `Pull Requests`. You can see labels (aka `categories`) in [`release-drafter.yml`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.github/release-drafter.yml). Works perfectly with [Semantic Versions](https://semver.org/) specification.
-
-For creating your open source community:
-
-- Ready-to-use [Pull Requests templates](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.github/PULL_REQUEST_TEMPLATE.md) and several [Issue templates](https://github.com/karthikraja95/fsdl_deforestation_detection/tree/master/.github/ISSUE_TEMPLATE).
-- Files such as: `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md` are generated automatically.
-- [`Stale bot`](https://github.com/apps/stale) that closes abandoned issues after a period of inactivity. (You will only [need to setup free plan](https://github.com/marketplace/stale)). Configuration is [here](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.github/.stale.yml).
-- [Semantic Versions](https://semver.org/) specification with [`Release Drafter`](https://github.com/marketplace/actions/release-drafter).
-
-## Installation
-
-```bash
-pip install -U fsdl_deforestation_detection
-```
-
-or install with `Poetry`
-
-```bash
-poetry add fsdl_deforestation_detection
-```
-
-Then you can run
-
-```bash
-fsdl_deforestation_detection --help
-```
-
-```bash
-fsdl_deforestation_detection --name Roman
-```
-
-or if installed with `Poetry`:
-
-```bash
-poetry run fsdl_deforestation_detection --help
-```
-
-```bash
-poetry run fsdl_deforestation_detection --name Roman
-```
 
 ### Makefile usage
 
@@ -323,29 +250,6 @@ More information [here](https://github.com/karthikraja95/fsdl_deforestation_dete
 
 </p>
 </details>
-
-## 📈 Releases
-
-You can see the list of available releases on the [GitHub Releases](https://github.com/karthikraja95/fsdl_deforestation_detection/releases) page.
-
-We follow [Semantic Versions](https://semver.org/) specification.
-
-We use [`Release Drafter`](https://github.com/marketplace/actions/release-drafter). As pull requests are merged, a draft release is kept up-to-date listing the changes, ready to publish when you’re ready. With the categories option, you can categorize pull requests in release notes using labels.
-
-For Pull Request this labels are configured, by default:
-
-|               **Label**               |  **Title in Releases**  |
-| :-----------------------------------: | :---------------------: |
-|       `enhancement`, `feature`        |       🚀 Features       |
-| `bug`, `refactoring`, `bugfix`, `fix` | 🔧 Fixes & Refactoring  |
-|       `build`, `ci`, `testing`        | 📦 Build System & CI/CD |
-|              `breaking`               |   💥 Breaking Changes   |
-|            `documentation`            |    📝 Documentation     |
-|            `dependencies`             | ⬆️ Dependencies updates |
-
-You can update it in [`release-drafter.yml`](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/.github/release-drafter.yml).
-
-GitHub creates the `bug`, `enhancement`, and `documentation` labels for you. Dependabot creates the `dependencies` label. Create the remaining labels on the Issues tab of your GitHub repository, when you need them.
 
 ## 🛡 License
 
