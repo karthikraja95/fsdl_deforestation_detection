@@ -1,4 +1,3 @@
-from fsdl_deforestration_detection.data.data_utils import IMG_PATH
 import streamlit as st
 import sys
 from glob import glob
@@ -22,8 +21,6 @@ from data_utils import (
 )
 
 PERF_COLORS = cl.scales["8"]["div"]["RdYlGn"]
-
-import time
 
 
 def load_css(file_name):

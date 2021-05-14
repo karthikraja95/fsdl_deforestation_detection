@@ -1,0 +1,92 @@
+[
+    {
+      "mode": "REQUIRED",
+      "name": "image_name",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "agriculture",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "artisinal_mine",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "bare_ground",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "blooming",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "blow_down",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "clear",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "cloudy",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "conventional_mine",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "cultivation",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "habitation",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "haze",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "partly_cloudy",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "primary",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "road",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "selective_logging",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "slash_burn",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "water",
+      "type": "BOOLEAN"
+    }
+]

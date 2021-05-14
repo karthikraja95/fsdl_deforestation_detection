@@ -1,14 +1,13 @@
 import streamlit as st
 import sys
 from copy import deepcopy
-import numpy as np
 from fastai.vision.all import load_learner
 import torch
 from skimage.io import imread
 import plotly.express as px
 
 sys.path.append("../data/")
-from data_utils import DATA_PATH, IMG_PATH
+from data_utils import DATA_PATH
 from dashboard_utils import (
     set_paths,
     load_image_names,
@@ -48,7 +47,6 @@ def playground():
         "ideally around 256x256 size.",
     )
     # Set the model
-    # NOTE Using random data while the models aren't usable
     model = load_learner("../modeling/resnet50-128.pkl")
     # Speed up model inference by deactivating gradients
     model.model.eval()

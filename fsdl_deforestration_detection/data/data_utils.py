@@ -8,7 +8,7 @@ from typing import List, Tuple
 
 # NOTE This is just for the Planet Amazon dataset;
 # we need to refactor this when we use other datasets
-DATA_PATH = "/Users/andreferreira/Documents_Offline/Datasets/fsdl/"
+DATA_PATH = "/Users/andrecnf/Documents/datasets/fsdl/"
 PLANET_PATH = "planet-understanding-the-amazon-from-space/"
 IMG_PATH = "train-jpg/"
 TIFF_PATH = "train-tif-v2/"
