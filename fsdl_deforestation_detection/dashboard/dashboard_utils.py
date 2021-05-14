@@ -17,8 +17,11 @@ import io
 
 st.write(f"DEBUG: Current directory: {os.getcwd()}")
 st.write(f"DEBUG: Current directory's files: {os.listdir()}")
-st.write(f"DEBUG: Current directory's files: {os.listdir('..')}")
-sys.path.append("../data/")
+st.write(f"DEBUG: Parent directory's files: {os.listdir('..')}")
+st.write(
+    f"DEBUG: fsdl_deforestation_detection subdirectory's files: {os.listdir('fsdl_deforestation_detection/')}"
+)
+sys.path.append("fsdl_deforestation_detection/data/")
 from data_utils import (
     DATA_PATH,
     TAGS,

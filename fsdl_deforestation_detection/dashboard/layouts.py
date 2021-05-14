@@ -7,7 +7,8 @@ from skimage.io import imread
 import plotly.express as px
 from datetime import datetime
 
-sys.path.append("../data/")
+sys.path.append("fsdl_deforestation_detection/data/")
+sys.path.append("fsdl_deforestation_detection/dashboard/")
 from data_utils import DATA_PATH
 from dashboard_utils import (
     set_paths,
