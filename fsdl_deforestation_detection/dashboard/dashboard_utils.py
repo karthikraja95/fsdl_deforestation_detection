@@ -15,7 +15,7 @@ import colorlover as cl
 from google.cloud import storage, bigquery
 import io
 
-sys.path.append("../data/")
+sys.path.append("fsdl_deforestation_detection/data/")
 from data_utils import (
     DATA_PATH,
     TAGS,
@@ -65,6 +65,7 @@ def set_paths(dataset_name, model_type):
     return bucket_name, img_path, labels_table, img_name_col, label_col
 
 
+@st.cache
 def load_image(bucket_name, img_path, image_name):
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.get_blob(f"{img_path}{image_name}.jpg")
@@ -74,6 +75,7 @@ def load_image(bucket_name, img_path, image_name):
     return image
 
 
+@st.cache
 def load_labels_df(labels_table):
     labels_df = pd.read_gbq(
         f"SELECT * FROM `fsdl-305310.deforestation_data.{labels_table}`"
@@ -102,7 +104,7 @@ def load_image_names(model, chosen_set, bucket_name, labels_table):
     return img_names
 
 
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_data(
     dataset_name,
     model_type,
@@ -149,7 +151,11 @@ def load_data(
     return imgs, labels
 
 
-@st.cache(hash_funcs={Learner: hash_fastai_model}, suppress_st_warning=True)
+@st.cache(
+    hash_funcs={Learner: hash_fastai_model},
+    suppress_st_warning=True,
+    allow_output_mutation=True,
+)
 def run_model(model, img):
     output = model.predict(img[:, :, :3])
     return output

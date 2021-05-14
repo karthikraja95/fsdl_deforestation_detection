@@ -620,3 +620,4 @@ MigrationBackup/
 # Streamlit secrets
 .streamlit/
 fsdl_deforestation_detection/dashboard/google_credentials.json
+google_credentials.json
