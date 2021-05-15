@@ -74,7 +74,7 @@ def load_image(bucket_name, img_path, image_name):
     return image
 
 
-@st.cache
+@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_labels_df(labels_table):
     labels_df = pd.read_gbq(
         f"SELECT * FROM `fsdl-305310.deforestation_data.{labels_table}`"
