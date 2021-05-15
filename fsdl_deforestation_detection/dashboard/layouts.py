@@ -244,7 +244,7 @@ def overview():
         "Made by [André Ferreira](https://andrecnf.com/) and [Karthik Bhaskar](https://www.kbhaskar.com/)."
     )
     # Load all the data (or some samples) from the selected database
-    n_samples = 500
+    n_samples = 250
     imgs, labels = deepcopy(
         load_data(
             dataset_name,

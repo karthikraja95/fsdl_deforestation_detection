@@ -21,6 +21,8 @@ A deep learning approach to detecting deforestation risk, using satellite images
 
 * [Streamlit dashboard for testing the model and exploring the data](https://share.streamlit.io/andrecnf/fsdl_deforestation_detection/fsdl_deforestation_detection/dashboard/streamlit_app.py)
 
+* [Model training notebook in Colab](https://colab.research.google.com/github/karthikraja95/fsdl_deforestation_detection/blob/master/fsdl_deforestation_detection/experimental/FSDL_Final_Model.ipynb)
+
 * [Project management workspace in Notion](https://www.notion.so/Homepage-2ff744c443814f459d80a6e5819226a5)
 
 * [Loom video about the project]()
