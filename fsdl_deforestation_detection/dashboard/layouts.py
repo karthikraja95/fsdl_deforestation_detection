@@ -1,6 +1,5 @@
 import streamlit as st
 import sys
-from copy import deepcopy
 from fastai.vision.all import load_learner
 import torch
 from skimage.io import imread
@@ -245,17 +244,15 @@ def overview():
     )
     # Load all the data (or some samples) from the selected database
     n_samples = 250
-    imgs, labels = deepcopy(
-        load_data(
-            dataset_name,
-            model_type,
-            bucket_name,
-            img_path,
-            img_names,
-            labels_table,
-            img_name_col,
-            n_samples=n_samples,
-        )
+    imgs, labels = load_data(
+        dataset_name,
+        model_type,
+        bucket_name,
+        img_path,
+        img_names,
+        labels_table,
+        img_name_col,
+        n_samples=n_samples,
     )
     # Show some performance metrics
     # TODO Use all the set data to get the correct performance metrics
