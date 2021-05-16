@@ -1,4 +1,4 @@
-# fsdl_deforestation_detection
+# FSDL Deforestation Detection
 
 <div align="center">
 
@@ -11,7 +11,7 @@
 [![Semantic Versions](https://img.shields.io/badge/%F0%9F%9A%80-semantic%20versions-informational.svg)](https://github.com/karthikraja95/fsdl_deforestation_detection/releases)
 [![License](https://img.shields.io/github/license/karthikraja95/fsdl_deforestation_detection)](https://github.com/karthikraja95/fsdl_deforestation_detection/blob/master/LICENSE)
 
-Predicting Deforestation from Satellite Images. An End-to-End Deep Learning Project. 
+Detecting deforestation from satellite images: a full stack deep learning project
 
 </div>
 
@@ -25,11 +25,9 @@ A deep learning approach to detecting deforestation risk, using satellite images
 
 * [Project management workspace in Notion](https://www.notion.so/Homepage-2ff744c443814f459d80a6e5819226a5)
 
-* [Loom video about the project]()
+* [Loom video about the project](https://www.loom.com/share/365d412db3a0474ba46d4fdd7f4c5494)
 
-* [Medium article about this project]()
-
-* [Slides of the project]()
+* [Medium article about this project](https://towardsdatascience.com/detecting-deforestation-from-satellite-images-7aa6dfbd9f61)
 
 This is the result of a group project, made by [André Ferreira](https://andrecnf.com/) and [Karthik Bhaskar](https://www.kbhaskar.com/), for the [Full Stack Deep Learning - Spring 2021 online course](http://fullstackdeeplearning.com/spring2021/).
 
