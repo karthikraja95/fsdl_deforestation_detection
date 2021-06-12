@@ -29,11 +29,11 @@ jobs:
         source "$HOME/.poetry/env"
         poetry config virtualenvs.in-project true
         poetry install
+        poetry run pip install --upgrade pip pyyaml  # placate Safety
 
     - name: Run safety checks
       run: |
         source "$HOME/.poetry/env"
-        pip install --upgrade pip pyyaml  # placate Safety
         STRICT=1 make check-safety
 
     - name: Run style checks
