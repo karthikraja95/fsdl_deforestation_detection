@@ -9,7 +9,7 @@ Original file is located at
 # FSDL Project
 This Notebook is used to train a ResNet-50 model on Amazon Planet Dataset (MultiLabel Classification Problem)
 
-Used Fast AI for eaiser training and inference rather than PyTorch or Tensorflow
+Used Fast AI for easier training and inference rather than PyTorch or Tensorflow
 
 ## Load Dataset into the Drive using Kaggle API
 
