@@ -3,7 +3,7 @@ subprocess32==3.5.4
 numpy==1.19.5
 pandas==1.1.5
 pandas-gbq==0.15.0
-tensorflow==2.4.1
+tensorflow==2.5.0
 pytorch-lightning==1.2.8
 torch==1.7.1
 torchmetrics==0.2.0
