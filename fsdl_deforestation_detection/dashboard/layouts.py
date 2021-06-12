@@ -88,7 +88,7 @@ def playground():
         show_model_output(model_type, output)
         st.info(
             "ℹ️ Green labels represent categories that we don't associate with deforestation "
-            "risk (e.g. natural occurences or old structures), while red labels can serve as "
+            "risk (e.g. natural occurrences or old structures), while red labels can serve as "
             "a potential deforestation signal (e.g. new constructions, empty patches in forests)."
         )
         # User feedback / data flywheel
@@ -134,7 +134,7 @@ def playground():
                 "improve our models 🙌\n"
                 "It would be even better if you could tell us "
                 "what makes you think the model failed. Mind "
-                "leaving a comment bellow?"
+                "leaving a comment below?"
             )
             if session_state.user_data_uploaded is False:
                 upload_user_data(
@@ -173,7 +173,7 @@ def playground():
                 st.info(
                     "ℹ️ Our model is largely based on the [ResNet](https://paperswithcode.com/method/resnet) "
                     "archirtecture, using a ResNet50 from [FastAI](https://docs.fast.ai/). "
-                    "Bellow you can see the model's layer definition."
+                    "Below you can see the model's layer definition."
                 )
                 st.text(model.model)
             with explain_cols[1]:
@@ -355,7 +355,7 @@ def overview():
     )
     st.info(
         "ℹ️ Green labels represent categories that we don't associate with deforestation "
-        "risk (e.g. natural occurences or old structures), while red labels can serve as "
+        "risk (e.g. natural occurrences or old structures), while red labels can serve as "
         "a potential deforestation signal (e.g. new constructions, empty patches in forests)."
     )
     # Model interpretation
@@ -366,7 +366,7 @@ def overview():
             st.info(
                 "ℹ️ Our model is largely based on the [ResNet](https://paperswithcode.com/method/resnet) "
                 "archirtecture, using a ResNet50 from [FastAI](https://docs.fast.ai/). "
-                "Bellow you can see the model's layer definition."
+                "Below you can see the model's layer definition."
             )
             st.text(model.model)
         with explain_cols[1]:
