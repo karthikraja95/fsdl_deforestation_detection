@@ -86,11 +86,9 @@ def load_image_names(model, chosen_set, bucket_name, labels_table):
     if chosen_set is None:
         img_names = storage_client.list_blobs(bucket_name)
         img_names = sorted(
-            [
-                f.name.split("/")[-1].split(".")[0]
-                for f in img_names
-                if ".jpg" in f.name
-            ]
+            f.name.split("/")[-1].split(".")[0]
+            for f in img_names
+            if ".jpg" in f.name
         )
     else:
         if chosen_set == "Train":
@@ -318,7 +316,7 @@ def get_pixel_dist_plot(imgs):
         (imgs.shape[3], imgs.shape[0] * imgs.shape[1] * imgs.shape[2])
     )
     for i in range(imgs.shape[3]):
-        imgs_flat[i, :] = imgs[:, :, :, i].reshape((-1)).numpy()
+        imgs_flat[i, :] = imgs[:, :, :, i].reshape(-1).numpy()
     # Get the histogram data
     pixel_min = int(np.min(imgs_flat))
     pixel_max = int(np.max(imgs_flat))

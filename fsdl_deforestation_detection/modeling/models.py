@@ -46,7 +46,7 @@ class ResNet(tf.keras.Model):
         Raises:
             Exception: [description]
         """
-        super(ResNet, self).__init__()
+        super().__init__()
         self.pretrain_dataset = pretrain_dataset
         self.pooling = pooling
         self.task = task

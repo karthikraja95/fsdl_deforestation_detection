@@ -24,7 +24,7 @@ except Exception:
     from streamlit.server.server import Server
 
 
-class SessionState(object):
+class SessionState:
     def __init__(self, **kwargs):
         """A new SessionState object.
         Parameters
