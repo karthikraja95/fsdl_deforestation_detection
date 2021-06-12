@@ -95,6 +95,7 @@ for task in tqdm(args.task, desc="Tasks"):
     if task == "deforestation":
         labels_df = data_utils.add_deforestation_label(labels_df)
         labels_df = labels_df[["image_name", "deforestation"]]
+
     # Specify the dataframe so that the generator has no required arguments
     def data_gen():
         for i in data_utils.get_amazon_sample(labels_df):
