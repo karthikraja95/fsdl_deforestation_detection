@@ -16,6 +16,7 @@ Used Fast AI for eaiser training and inference rather than PyTorch or Tensorflow
 Follow Kaggle API instruction to download the kaggle.json file and unzip the files in the current directory
 """
 
+# flake8: noqa
 ! pip install -Uq kaggle
 ! pip install -Uq fastai==2.2.5
 
