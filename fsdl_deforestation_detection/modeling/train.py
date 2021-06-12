@@ -65,8 +65,7 @@ if not isinstance(args.epochs, list):
     args.epochs = list(args.epochs)
 args.epochs = [int(epochs) for epochs in args.epochs]
 if args.pretrained:
-    assert (
-        len(args.epochs) == len(args.task) * 2,
+    assert len(args.epochs) == len(args.task) * 2, (
         "When training a pretrained model on a pipeline of tasks, "
         "the number of epochs should be specified twice for each task (for each task, "
         "initially we train just the final layer, then we fine-tune all the weights). "
@@ -74,8 +73,7 @@ if args.pretrained:
         f"Currently specified {len(args.epochs)} epoch sets and {len(args.task)} tasks.",
     )
 else:
-    assert (
-        len(args.epochs) == (len(args.task) * 2) - 1,
+    assert len(args.epochs) == (len(args.task) * 2) - 1, (
         "When training a model from scratch on a pipeline of tasks, "
         "the number of epochs should be specified once for an initial task and twice "
         "for the remaining ones (for each task except the first, initially we train just "
