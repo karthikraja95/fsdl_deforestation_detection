@@ -12,11 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2.2.2
+      uses: actions/setup-python@v2.2.1
       with:
         python-version: ${{ matrix.python-version }}
-
-    - run: pip install --upgrade pip pyyaml  # placate Safety
 
     - name: Install poetry
       run: make download-poetry
@@ -35,6 +33,7 @@ jobs:
     - name: Run safety checks
       run: |
         source "$HOME/.poetry/env"
+        pip install --upgrade pip pyyaml  # placate Safety
         STRICT=1 make check-safety
 
     - name: Run style checks
